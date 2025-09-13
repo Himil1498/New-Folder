@@ -1588,7 +1588,7 @@ const WorkingMeasurementMap = React.forwardRef(({
 
   const clearAll = () => {
     addLog('🧹 === STARTING COMPLETE CLEAR OPERATION ===');
-    addLog(`📊 Current state - Markers: ${markers.length}, Labels: ${distanceLabels.length}, Points: ${points.length}`);
+    addLog(`📊 Current state - Markers: ${markers.length}, Labels: ${distanceLabels.length}, Points: ${points.length}, Polygon Points: ${polygonPoints.length}`);
     addNotification('Clearing all measurements...', 'info');
     
     try {
@@ -1616,6 +1616,12 @@ const WorkingMeasurementMap = React.forwardRef(({
         }
         
         setIsDrawing(false);
+      }
+      
+      // Force stop polygon drawing mode if active
+      if (isPolygonDrawing) {
+        addLog('⏹️ Force stopping polygon drawing mode...');
+        setIsPolygonDrawing(false);
       }
       
       // Clear polyline with enhanced error handling

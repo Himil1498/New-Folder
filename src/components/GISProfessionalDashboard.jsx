@@ -44,7 +44,7 @@ import {
   Grow,
   Autocomplete,
   ListItemAvatar,
-  Avatar,
+  Avatar
 } from "@mui/material";
 import {
   PanTool,
@@ -88,7 +88,7 @@ import {
   Menu,
   MoreVert,
   Brightness4,
-  Brightness7,
+  Brightness7
 } from "@mui/icons-material";
 import WorkingMeasurementMap from "./WorkingMeasurementMap";
 import MapSearchBox from "./MapSearchBox";
@@ -102,13 +102,13 @@ const GISProfessionalDashboard = () => {
     roads: false,
     buildings: false,
     terrain: false,
-    infrastructure: true,
+    infrastructure: true
   });
   const [selectedBaseMap, setSelectedBaseMap] = useState("satellite");
   const [bookmarks, setBookmarks] = useState([
     { id: 1, name: "Delhi Metro Area", coords: { lat: 28.6139, lng: 77.209 } },
     { id: 2, name: "Mumbai Central", coords: { lat: 19.076, lng: 72.8777 } },
-    { id: 3, name: "Bangalore IT Hub", coords: { lat: 12.9716, lng: 77.5946 } },
+    { id: 3, name: "Bangalore IT Hub", coords: { lat: 12.9716, lng: 77.5946 } }
   ]);
 
   // Enhanced UI state
@@ -147,7 +147,7 @@ const GISProfessionalDashboard = () => {
   // Live coordinates state
   const [liveCoordinates, setLiveCoordinates] = useState({
     lat: 20.5937,
-    lng: 78.9629,
+    lng: 78.9629
   });
   const [mapZoom, setMapZoom] = useState(6);
   const [mouseCoordinates, setMouseCoordinates] = useState(null);
@@ -160,22 +160,21 @@ const GISProfessionalDashboard = () => {
   const [debugLogs, setDebugLogs] = useState([]);
   const [showDebugLogs, setShowDebugLogs] = useState(false);
 
-  
   // Street View state
   const [streetViewOpen, setStreetViewOpen] = useState(false);
-  
+
   // User profile state
-  const [user] = useState({ 
+  const [user] = useState({
     username: "Himil Chauhan", // Dynamic username
     email: "himil.chauhan@example.com",
     role: "GIS Professional"
   });
   const [loginTime] = useState(new Date().toISOString());
-  
+
   const handleLogout = () => {
-    addLog('🚪 Logging out...');
+    addLog("🚪 Logging out...");
     // Add logout logic here
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   // Saved data states
@@ -184,10 +183,13 @@ const GISProfessionalDashboard = () => {
   const [savedElevations, setSavedElevations] = useState([]);
   const [showSavedDataDialog, setShowSavedDataDialog] = useState(false);
   const [selectedDataType, setSelectedDataType] = useState("all"); // 'measurements', 'polygons', 'elevations', 'all'
-  const [selectedDataLibraryType, setSelectedDataLibraryType] = useState("both"); // 'distance', 'polygon', 'both'
-  const [polygonHistoryDialogOpen, setPolygonHistoryDialogOpen] = useState(false);
+  const [selectedDataLibraryType, setSelectedDataLibraryType] =
+    useState("both"); // 'distance', 'polygon', 'both'
+  const [polygonHistoryDialogOpen, setPolygonHistoryDialogOpen] =
+    useState(false);
   const [polygonToDelete, setPolygonToDelete] = useState(null);
-  const [polygonDeleteConfirmOpen, setPolygonDeleteConfirmOpen] = useState(false);
+  const [polygonDeleteConfirmOpen, setPolygonDeleteConfirmOpen] =
+    useState(false);
 
   // Elevation functionality states
   const [elevationMode, setElevationMode] = useState(false);
@@ -208,12 +210,12 @@ const GISProfessionalDashboard = () => {
   const isWithinIndiaBounds = (lat, lng) => {
     // Approximate bounding box for India
     const indiaBounds = {
-      north: 37.17,   // Kashmir
-      south: 6.45,    // Kanyakumari
-      east: 97.4,     // Arunachal Pradesh
-      west: 68.1      // Gujarat
+      north: 37.17, // Kashmir
+      south: 6.45, // Kanyakumari
+      east: 97.4, // Arunachal Pradesh
+      west: 68.1 // Gujarat
     };
-    
+
     return (
       lat >= indiaBounds.south &&
       lat <= indiaBounds.north &&
@@ -341,11 +343,11 @@ const GISProfessionalDashboard = () => {
   };
 
   const handleClearSearch = () => {
-    setSearchValue('');
+    setSearchValue("");
     setSuggestions([]);
     setSelectedPlace(null);
     clearSearchMarkers();
-    addLog('🔍 Search cleared');
+    addLog("🔍 Search cleared");
   };
 
   const handleSelectPlace = (suggestion) => {
@@ -377,11 +379,23 @@ const GISProfessionalDashboard = () => {
     const infoWindow = new window.google.maps.InfoWindow({
       content: `
         <div style="padding:8px; max-width:250px; font-family:Arial,sans-serif;">
-          <h4 style="margin:0 0 4px 0; color:#1976d2; font-size:14px;">${suggestion.displayName}</h4>
-          <p style="margin:2px 0; color:#555; font-size:12px;"><strong>Address:</strong> ${suggestion.formattedAddress}</p>
-          <p style="margin:2px 0; color:#555; font-size:12px;"><strong>Coordinates:</strong> ${lat.toFixed(6)}, ${lng.toFixed(6)}</p>
-          ${suggestion.types && suggestion.types.length > 0 ? 
-            `<p style="margin:2px 0; color:#555; font-size:12px;"><strong>Type:</strong> ${suggestion.types[0].replace(/_/g, " ")}</p>` : ""}
+          <h4 style="margin:0 0 4px 0; color:#1976d2; font-size:14px;">${
+            suggestion.displayName
+          }</h4>
+          <p style="margin:2px 0; color:#555; font-size:12px;"><strong>Address:</strong> ${
+            suggestion.formattedAddress
+          }</p>
+          <p style="margin:2px 0; color:#555; font-size:12px;"><strong>Coordinates:</strong> ${lat.toFixed(
+            6
+          )}, ${lng.toFixed(6)}</p>
+          ${
+            suggestion.types && suggestion.types.length > 0
+              ? `<p style="margin:2px 0; color:#555; font-size:12px;"><strong>Type:</strong> ${suggestion.types[0].replace(
+                  /_/g,
+                  " "
+                )}</p>`
+              : ""
+          }
         </div>
       `
     });
@@ -392,24 +406,28 @@ const GISProfessionalDashboard = () => {
 
     setSearchMarkers([marker]);
     setSelectedPlace(suggestion);
-    
+
     // Update live coordinates to match search result
     setLiveCoordinates({ lat, lng });
     setSearchValue(suggestion.displayName);
     setSuggestions([]);
 
-    addLog(`📍 Selected: ${suggestion.displayName} at ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+    addLog(
+      `📍 Selected: ${suggestion.displayName} at ${lat.toFixed(
+        4
+      )}, ${lng.toFixed(4)}`
+    );
   };
 
   const handleSearchInputChange = (event, newValue, reason) => {
-    if (reason === 'input') {
+    if (reason === "input") {
       setSearchValue(newValue);
-      
+
       // Clear previous timeout
       if (searchTimeout.current) {
         clearTimeout(searchTimeout.current);
       }
-      
+
       // Debounce search requests
       searchTimeout.current = setTimeout(() => {
         searchPlaces(newValue);
@@ -422,27 +440,27 @@ const GISProfessionalDashboard = () => {
       id: "satellite",
       name: "SATELLITE",
       description: "HIGH RESOLUTION SATELLITE IMAGERY",
-      icon: "🛰️",
+      icon: "🛰️"
     },
     {
       id: "street",
       name: "STREET MAP",
       description: "DETAILED STREET AND ROAD NETWORK",
-      icon: "🗺️",
+      icon: "🗺️"
     },
     {
       id: "terrain",
       name: "TERRAIN",
       description: "TOPOGRAPHIC AND ELEVATION DATA",
-      icon: "🏔️",
-    },
+      icon: "🏔️"
+    }
   ];
 
   const handleLayerToggle = (layerName) => {
     const newValue = !activeLayers[layerName];
     setActiveLayers((prev) => ({
       ...prev,
-      [layerName]: newValue,
+      [layerName]: newValue
     }));
 
     // Pass layer changes to WorkingMeasurementMap
@@ -524,13 +542,15 @@ const GISProfessionalDashboard = () => {
       setElevationMode(true);
       setShowElevation(true);
       // Do NOT auto-open sidebar - user controls it manually
-      
+
       // Enable map click handling for elevation
       if (workingMapRef.current?.enableElevationMode) {
         workingMapRef.current.enableElevationMode(true);
       }
-      
-      addLog("🏔️ Elevation mode activated - Click two points on map to create profile");
+
+      addLog(
+        "🏔️ Elevation mode activated - Click two points on map to create profile"
+      );
     } else {
       // Stopping elevation mode
       setElevationMode(false);
@@ -539,12 +559,12 @@ const GISProfessionalDashboard = () => {
       setElevationClickCount(0);
       setElevationMarkers([]);
       setShowElevationChart(false);
-      
+
       // Disable map click handling for elevation
       if (workingMapRef.current?.enableElevationMode) {
         workingMapRef.current.enableElevationMode(false);
       }
-      
+
       addLog("🔴 Elevation mode deactivated");
     }
   };
@@ -579,7 +599,7 @@ const GISProfessionalDashboard = () => {
         // We now have 2 points, generate elevation profile
         generateElevationProfile(newPoints);
         // Don't close elevation mode immediately, let user see the result
-        addLog('📊 Elevation profile generated successfully!');
+        addLog("📊 Elevation profile generated successfully!");
       }
     }
   };
@@ -619,7 +639,7 @@ const GISProfessionalDashboard = () => {
           lng,
           elevation: Math.round(elevation),
           distance: Math.round(distance),
-          index: i,
+          index: i
         });
       }
 
@@ -656,14 +676,14 @@ const GISProfessionalDashboard = () => {
   const handleShowInfrastructure = () => {
     const newValue = !showInfrastructure;
     setShowInfrastructure(newValue);
-    
+
     // Do NOT auto-open sidebar - user controls it manually
     if (newValue) {
-      addLog('🏢 Infrastructure mode activated');
+      addLog("🏢 Infrastructure mode activated");
     } else {
-      addLog('🏢 Infrastructure mode deactivated');
+      addLog("🏢 Infrastructure mode deactivated");
     }
-    
+
     if (workingMapRef.current && workingMapRef.current.setShowInfrastructure) {
       workingMapRef.current.setShowInfrastructure(newValue);
     }
@@ -680,20 +700,20 @@ const GISProfessionalDashboard = () => {
     const measurements = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('distance_measurement_')) {
+      if (key && key.startsWith("distance_measurement_")) {
         try {
           const data = JSON.parse(localStorage.getItem(key));
           measurements.push({
             key,
             id: data.id || Date.now(),
-            name: data.name || 'Unnamed Measurement',
+            name: data.name || "Unnamed Measurement",
             distance: data.distance || 0,
             points: data.points || [],
             timestamp: data.timestamp || new Date().toISOString(),
-            unit: data.unit || 'metric'
+            unit: data.unit || "metric"
           });
         } catch (error) {
-          console.warn('Error loading measurement:', key, error);
+          console.warn("Error loading measurement:", key, error);
         }
       }
     }
@@ -706,20 +726,20 @@ const GISProfessionalDashboard = () => {
     const polygons = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('polygon_')) {
+      if (key && key.startsWith("polygon_")) {
         try {
           const data = JSON.parse(localStorage.getItem(key));
           polygons.push({
             key,
             id: data.id || Date.now(),
-            name: data.name || 'Unnamed Polygon',
+            name: data.name || "Unnamed Polygon",
             area: data.area || 0,
             points: data.points || [],
             timestamp: data.timestamp || new Date().toISOString(),
-            unit: data.unit || 'metric'
+            unit: data.unit || "metric"
           });
         } catch (error) {
-          console.warn('Error loading polygon:', key, error);
+          console.warn("Error loading polygon:", key, error);
         }
       }
     }
@@ -746,18 +766,18 @@ const GISProfessionalDashboard = () => {
       points: [...polygonPoints],
       area: polygonArea,
       timestamp: new Date().toISOString(),
-      unit: selectedUnit,
+      unit: selectedUnit
     };
 
     try {
       // Save to localStorage with unique key
       const key = `polygon_${newPolygon.id}`;
       localStorage.setItem(key, JSON.stringify(newPolygon));
-      
+
       // Update state
       setSavedPolygons((prev) => [...prev, newPolygon]);
       addLog(`💾 Polygon saved: ${newPolygon.name}`);
-      
+
       // Save to map reference if available
       if (workingMapRef.current && workingMapRef.current.savePolygonData) {
         workingMapRef.current.savePolygonData(
@@ -765,8 +785,8 @@ const GISProfessionalDashboard = () => {
         );
       }
     } catch (error) {
-      console.error('Error saving polygon:', error);
-      addLog('❌ Failed to save polygon to localStorage');
+      console.error("Error saving polygon:", error);
+      addLog("❌ Failed to save polygon to localStorage");
     }
 
     setPolygonSaveDialogOpen(false);
@@ -781,18 +801,18 @@ const GISProfessionalDashboard = () => {
       points: [...points],
       distance: totalDistance,
       timestamp: new Date().toISOString(),
-      unit: selectedUnit,
+      unit: selectedUnit
     };
 
     try {
       // Save to localStorage with unique key
       const key = `distance_measurement_${newMeasurement.id}`;
       localStorage.setItem(key, JSON.stringify(newMeasurement));
-      
+
       // Update state
       setSavedMeasurements((prev) => [...prev, newMeasurement]);
       addLog(`💾 Distance measurement saved: ${newMeasurement.name}`);
-      
+
       // Save to map reference if available
       if (workingMapRef.current && workingMapRef.current.saveMeasurement) {
         workingMapRef.current.saveMeasurement(
@@ -800,8 +820,8 @@ const GISProfessionalDashboard = () => {
         );
       }
     } catch (error) {
-      console.error('Error saving measurement:', error);
-      addLog('❌ Failed to save measurement to localStorage');
+      console.error("Error saving measurement:", error);
+      addLog("❌ Failed to save measurement to localStorage");
     }
 
     setSaveDialogOpen(false);
@@ -816,22 +836,31 @@ const GISProfessionalDashboard = () => {
       points: [...elevationPoints],
       data: [...elevationData],
       timestamp: new Date().toISOString(),
-      maxElevation: elevationData.length > 0 ? Math.max(...elevationData.map(d => d.elevation)) : 0,
-      minElevation: elevationData.length > 0 ? Math.min(...elevationData.map(d => d.elevation)) : 0,
-      totalDistance: elevationData.length > 0 ? elevationData[elevationData.length - 1]?.distance || 0 : 0
+      maxElevation:
+        elevationData.length > 0
+          ? Math.max(...elevationData.map((d) => d.elevation))
+          : 0,
+      minElevation:
+        elevationData.length > 0
+          ? Math.min(...elevationData.map((d) => d.elevation))
+          : 0,
+      totalDistance:
+        elevationData.length > 0
+          ? elevationData[elevationData.length - 1]?.distance || 0
+          : 0
     };
 
     try {
       // Save to localStorage with unique key
       const key = `elevation_${newElevation.id}`;
       localStorage.setItem(key, JSON.stringify(newElevation));
-      
+
       // Update state
       setSavedElevations((prev) => [...prev, newElevation]);
       addLog(`💾 Elevation profile saved: ${newElevation.name}`);
     } catch (error) {
-      console.error('Error saving elevation:', error);
-      addLog('❌ Failed to save elevation to localStorage');
+      console.error("Error saving elevation:", error);
+      addLog("❌ Failed to save elevation to localStorage");
     }
   };
 
@@ -856,15 +885,17 @@ const GISProfessionalDashboard = () => {
           if (workingMapRef.current?.map) {
             workingMapRef.current.map.setCenter({
               lat: latitude,
-              lng: longitude,
+              lng: longitude
             });
             workingMapRef.current.map.setZoom(15);
-            addLog(`📍 Located at: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
+            addLog(
+              `📍 Located at: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`
+            );
           }
         },
         (error) => {
           console.warn("Location not available:", error);
-          addLog('❌ Location access denied or unavailable');
+          addLog("❌ Location access denied or unavailable");
         }
       );
     }
@@ -873,10 +904,10 @@ const GISProfessionalDashboard = () => {
   const handleCenterIndia = () => {
     if (workingMapRef.current?.centerOnIndia) {
       workingMapRef.current.centerOnIndia();
-      addLog('🇮🇳 Centered map on India');
+      addLog("🇮🇳 Centered map on India");
     }
   };
-  
+
   const handleStreetView = () => {
     if (workingMapRef.current?.map) {
       try {
@@ -884,84 +915,94 @@ const GISProfessionalDashboard = () => {
         const center = workingMapRef.current.map.getCenter();
         const lat = center.lat();
         const lng = center.lng();
-        
+
         // Check if we already have a Street View panorama
         const streetViewService = new window.google.maps.StreetViewService();
-        
+
         // Check if Street View is available at this location
-        streetViewService.getPanorama({
-          location: { lat, lng },
-          radius: 50, // Search within 50 meters
-          source: window.google.maps.StreetViewSource.OUTDOOR
-        }, (data, status) => {
-          if (status === window.google.maps.StreetViewStatus.OK) {
-            // Street View is available, get or create the panorama
-            const streetView = workingMapRef.current.map.getStreetView();
-            
-            if (!streetViewOpen) {
-              // Configure and show Street View
-              streetView.setOptions({
-                position: data.location.latLng,
-                pov: {
-                  heading: 0,
-                  pitch: 0
-                },
-                zoom: 1,
-                visible: true,
-                enableCloseButton: true,
-                panControl: true,
-                panControlOptions: {
-                  position: window.google.maps.ControlPosition.LEFT_TOP
-                },
-                zoomControl: true,
-                addressControl: true,
-                linksControl: true,
-                motionTracking: false,
-                motionTrackingControl: false
-              });
-              
-              // Listen for when Street View is closed
-              const closeListener = streetView.addListener('visible_changed', () => {
-                if (!streetView.getVisible()) {
-                  setStreetViewOpen(false);
-                  addLog('🏦 Street View closed');
-                  window.google.maps.event.removeListener(closeListener);
-                }
-              });
-              
-              streetView.setVisible(true);
-              setStreetViewOpen(true);
-              addLog(`🏦 Street View opened at ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+        streetViewService.getPanorama(
+          {
+            location: { lat, lng },
+            radius: 50, // Search within 50 meters
+            source: window.google.maps.StreetViewSource.OUTDOOR
+          },
+          (data, status) => {
+            if (status === window.google.maps.StreetViewStatus.OK) {
+              // Street View is available, get or create the panorama
+              const streetView = workingMapRef.current.map.getStreetView();
+
+              if (!streetViewOpen) {
+                // Configure and show Street View
+                streetView.setOptions({
+                  position: data.location.latLng,
+                  pov: {
+                    heading: 0,
+                    pitch: 0
+                  },
+                  zoom: 1,
+                  visible: true,
+                  enableCloseButton: true,
+                  panControl: true,
+                  panControlOptions: {
+                    position: window.google.maps.ControlPosition.LEFT_TOP
+                  },
+                  zoomControl: true,
+                  addressControl: true,
+                  linksControl: true,
+                  motionTracking: false,
+                  motionTrackingControl: false
+                });
+
+                // Listen for when Street View is closed
+                const closeListener = streetView.addListener(
+                  "visible_changed",
+                  () => {
+                    if (!streetView.getVisible()) {
+                      setStreetViewOpen(false);
+                      addLog("🏦 Street View closed");
+                      window.google.maps.event.removeListener(closeListener);
+                    }
+                  }
+                );
+
+                streetView.setVisible(true);
+                setStreetViewOpen(true);
+                addLog(
+                  `🏦 Street View opened at ${lat.toFixed(4)}, ${lng.toFixed(
+                    4
+                  )}`
+                );
+              } else {
+                // Close Street View
+                streetView.setVisible(false);
+                setStreetViewOpen(false);
+                addLog("🏦 Street View closed");
+              }
             } else {
-              // Close Street View
-              streetView.setVisible(false);
-              setStreetViewOpen(false);
-              addLog('🏦 Street View closed');
+              // No Street View available, show fallback
+              addLog("⚠️ Street View not available at this location");
+
+              // Fallback: open Google Street View in new tab
+              const streetViewUrl = `https://www.google.com/maps/@${lat},${lng},3a,75y,0h,90t/data=!3m6!1e1!3m4!1s0!2e0!7i16384!8i8192`;
+              window.open(streetViewUrl, "_blank", "noopener,noreferrer");
+              addLog("🏦 Street View opened in new tab (fallback)");
             }
-          } else {
-            // No Street View available, show fallback
-            addLog('⚠️ Street View not available at this location');
-            
-            // Fallback: open Google Street View in new tab
-            const streetViewUrl = `https://www.google.com/maps/@${lat},${lng},3a,75y,0h,90t/data=!3m6!1e1!3m4!1s0!2e0!7i16384!8i8192`;
-            window.open(streetViewUrl, '_blank', 'noopener,noreferrer');
-            addLog('🏦 Street View opened in new tab (fallback)');
           }
-        });
+        );
       } catch (error) {
-        console.error('Street View error:', error);
-        addLog('❌ Street View error: ' + error.message);
-        
+        console.error("Street View error:", error);
+        addLog("❌ Street View error: " + error.message);
+
         // Ultimate fallback: open in Google Maps
         const center = workingMapRef.current.map.getCenter();
         const lat = center.lat();
         const lng = center.lng();
         const googleMapsUrl = `https://www.google.com/maps/@${lat},${lng},3a,75y,0h,90t/data=!3m7!1e1!3m5!1s0!2e0!3e5!7i16384!8i8192`;
-        window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
-        addLog('🏦 Opened Google Street View in new tab');
+        window.open(googleMapsUrl, "_blank", "noopener,noreferrer");
+        addLog("🏦 Opened Google Street View in new tab");
       }
     } else {
-      addLog('❌ Map not available for Street View');
+      addLog("❌ Map not available for Street View");
     }
   };
 
@@ -1037,7 +1078,6 @@ const GISProfessionalDashboard = () => {
     }
   };
 
-
   // Bookmark handlers
   const handleEditBookmark = (bookmark) => {
     setEditingBookmark(bookmark);
@@ -1087,28 +1127,29 @@ const GISProfessionalDashboard = () => {
     });
   };
 
-
   const loadPolygonData = (polygonData) => {
     if (workingMapRef.current && workingMapRef.current.loadPolygonData) {
       workingMapRef.current.loadPolygonData(polygonData);
       addLog(`✅ Polygon loaded on map: ${polygonData.name}`);
       setPolygonHistoryDialogOpen(false);
     } else {
-      addLog('❌ Cannot load polygon - map not ready');
+      addLog("❌ Cannot load polygon - map not ready");
     }
   };
 
   const deletePolygon = () => {
     if (polygonToDelete) {
       // Check if the deleted polygon is currently loaded on the map
-      const isDeletingLoaded = workingMapRef.current?.loadedPolygonKey && polygonToDelete.key === workingMapRef.current.loadedPolygonKey;
-      
+      const isDeletingLoaded =
+        workingMapRef.current?.loadedPolygonKey &&
+        polygonToDelete.key === workingMapRef.current.loadedPolygonKey;
+
       // Remove from storage
       localStorage.removeItem(polygonToDelete.key);
-      
+
       // Refresh list
       loadSavedPolygons();
-      
+
       // If it was loaded, clear it from the map immediately
       if (isDeletingLoaded && workingMapRef.current?.clearPolygonData) {
         workingMapRef.current.clearPolygonData();
@@ -1116,7 +1157,7 @@ const GISProfessionalDashboard = () => {
       } else {
         addLog(`🗑️ Polygon deleted: ${polygonToDelete.name}`);
       }
-      
+
       setPolygonDeleteConfirmOpen(false);
       setPolygonToDelete(null);
     }
@@ -1131,23 +1172,28 @@ const GISProfessionalDashboard = () => {
     setPolygonDeleteConfirmOpen(false);
     setPolygonToDelete(null);
   };
-  
+
   // Measurement deletion functionality
   const [measurementToDelete, setMeasurementToDelete] = useState(null);
-  const [measurementDeleteConfirmOpen, setMeasurementDeleteConfirmOpen] = useState(false);
-  
+  const [measurementDeleteConfirmOpen, setMeasurementDeleteConfirmOpen] =
+    useState(false);
+
   const deleteMeasurement = () => {
     if (measurementToDelete) {
       // Check if the deleted measurement is currently loaded on the map
-      const isDeletingLoaded = workingMapRef.current?.loadedMeasurementKey && measurementToDelete.key === workingMapRef.current.loadedMeasurementKey;
-      
+      const isDeletingLoaded =
+        workingMapRef.current?.loadedMeasurementKey &&
+        measurementToDelete.key === workingMapRef.current.loadedMeasurementKey;
+
       // Remove from storage
       localStorage.removeItem(measurementToDelete.key);
-      
+
       // Refresh saved measurements list
-      const updatedMeasurements = savedMeasurements.filter(m => m.key !== measurementToDelete.key);
+      const updatedMeasurements = savedMeasurements.filter(
+        (m) => m.key !== measurementToDelete.key
+      );
       setSavedMeasurements(updatedMeasurements);
-      
+
       // If it was loaded, clear it from the map immediately
       if (isDeletingLoaded && workingMapRef.current?.clearAll) {
         workingMapRef.current.clearAll();
@@ -1157,17 +1203,17 @@ const GISProfessionalDashboard = () => {
       } else {
         addLog(`🗑️ Measurement deleted: ${measurementToDelete.name}`);
       }
-      
+
       setMeasurementDeleteConfirmOpen(false);
       setMeasurementToDelete(null);
     }
   };
-  
+
   const showDeleteMeasurementConfirmation = (measurement) => {
     setMeasurementToDelete(measurement);
     setMeasurementDeleteConfirmOpen(true);
   };
-  
+
   const cancelDeleteMeasurement = () => {
     setMeasurementDeleteConfirmOpen(false);
     setMeasurementToDelete(null);
@@ -1204,7 +1250,7 @@ const GISProfessionalDashboard = () => {
         overflowX: "hidden", // Explicitly prevent horizontal scrollbar
         bgcolor: darkMode ? "#0a0a0a" : "#f8f9fa",
         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        color: darkMode ? "#e0e0e0" : "inherit",
+        color: darkMode ? "#e0e0e0" : "inherit"
       }}
     >
       {/* Enhanced Navbar */}
@@ -1213,7 +1259,7 @@ const GISProfessionalDashboard = () => {
         sx={{
           zIndex: theme.zIndex.drawer + 1,
           bgcolor: darkMode ? "grey.900" : "primary.main",
-          boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+          boxShadow: "0 2px 12px rgba(0,0,0,0.15)"
         }}
       >
         <Toolbar sx={{ minHeight: "64px !important" }}>
@@ -1247,9 +1293,9 @@ const GISProfessionalDashboard = () => {
             getOptionLabel={(option) => option.displayName || option}
             onInputChange={handleSearchInputChange}
             onChange={(event, newValue) => {
-              if (newValue && typeof newValue === 'object') {
+              if (newValue && typeof newValue === "object") {
                 handleSelectPlace(newValue);
-              } else if (newValue === null || newValue === '') {
+              } else if (newValue === null || newValue === "") {
                 // Clear search when user clears the input
                 handleClearSearch();
               }
@@ -1257,7 +1303,9 @@ const GISProfessionalDashboard = () => {
             renderOption={(props, option) => (
               <ListItem {...props} key={option.id}>
                 <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: "primary.main", width: 32, height: 32 }}>
+                  <Avatar
+                    sx={{ bgcolor: "primary.main", width: 32, height: 32 }}
+                  >
                     <LocationOn sx={{ fontSize: 18 }} />
                   </Avatar>
                 </ListItemAvatar>
@@ -1307,22 +1355,25 @@ const GISProfessionalDashboard = () => {
                     "& fieldset": { border: "none" },
                     "&:hover": { bgcolor: "rgba(255,255,255,0.25)" },
                     "&.Mui-focused": { bgcolor: "rgba(255,255,255,0.25)" },
-                    "& .MuiAutocomplete-input": { color: "white" },
-                  },
+                    "& .MuiAutocomplete-input": { color: "white" }
+                  }
                 }}
                 sx={{
-                  "& input::placeholder": { color: "rgba(255,255,255,0.7)" },
+                  "& input::placeholder": { color: "rgba(255,255,255,0.7)" }
                 }}
               />
             )}
             sx={{
               width: 350,
               mr: "auto",
-              "& .MuiAutocomplete-popupIndicator": { color: "rgba(255,255,255,0.7)" },
-              "& .MuiAutocomplete-clearIndicator": { color: "rgba(255,255,255,0.7)" },
+              "& .MuiAutocomplete-popupIndicator": {
+                color: "rgba(255,255,255,0.7)"
+              },
+              "& .MuiAutocomplete-clearIndicator": {
+                color: "rgba(255,255,255,0.7)"
+              }
             }}
           />
-
 
           {/* Undo/Redo functionality removed as requested */}
 
@@ -1330,19 +1381,33 @@ const GISProfessionalDashboard = () => {
             <IconButton
               color="inherit"
               onClick={() => setDarkMode(!darkMode)}
-              sx={{ mr: 1 }}
+              sx={{
+                mr: 1,
+                bgcolor: darkMode
+                  ? "rgba(255, 255, 255, 0.15)"
+                  : "rgba(0, 0, 0, 0.08)",
+                "&:hover": {
+                  bgcolor: darkMode
+                    ? "rgba(255, 255, 255, 0.25)"
+                    : "rgba(0, 0, 0, 0.15)"
+                }
+              }}
             >
-              {darkMode ? <Brightness7 /> : <Brightness4 />}
+              {darkMode ? (
+                <Brightness7 sx={{ color: "#FFD700" }} />
+              ) : (
+                <Brightness4 sx={{ color: "#5C6BC0" }} />
+              )}
             </IconButton>
           </Tooltip>
 
           {/* Profile Menu */}
-          <ProfileMenu 
+          <ProfileMenu
             user={user}
             loginTime={loginTime}
             handleLogout={handleLogout}
           />
-          
+
           <Tooltip title="Toggle Right Panel">
             <IconButton
               color="inherit"
@@ -1355,15 +1420,17 @@ const GISProfessionalDashboard = () => {
         </Toolbar>
       </AppBar>
 
-      <Box sx={{ 
-        display: "flex", 
-        flex: 1, 
-        pt: "64px", 
-        width: "100%", 
-        maxWidth: "100vw",
-        overflow: "hidden", 
-        overflowX: "hidden" 
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          flex: 1,
+          pt: "64px",
+          width: "100%",
+          maxWidth: "100vw",
+          overflow: "hidden",
+          overflowX: "hidden"
+        }}
+      >
         {/* Enhanced Left Sidebar */}
         <Slide
           direction="right"
@@ -1390,35 +1457,39 @@ const GISProfessionalDashboard = () => {
                   : "2px 0 20px rgba(0,0,0,0.15)",
                 top: "64px",
                 height: "calc(100vh - 64px)",
-                transition: theme.transitions.create(['transform', 'box-shadow'], {
-                  easing: theme.transitions.easing.easeInOut,
-                  duration: theme.transitions.duration.standard,
-                }),
+                zIndex: 10, // Higher z-index to appear on top of the map
+                transition: theme.transitions.create(
+                  ["transform", "box-shadow"],
+                  {
+                    easing: theme.transitions.easing.easeInOut,
+                    duration: theme.transitions.duration.standard
+                  }
+                ),
                 // Custom scrollbar styling
                 "& ::-webkit-scrollbar": {
-                  width: "6px",
+                  width: "6px"
                 },
                 "& ::-webkit-scrollbar-track": {
                   background: darkMode ? "#2a2a2a" : "#f1f1f1",
-                  borderRadius: "3px",
+                  borderRadius: "3px"
                 },
                 "& ::-webkit-scrollbar-thumb": {
-                  background: darkMode 
+                  background: darkMode
                     ? "linear-gradient(180deg, #4a4a4a 0%, #666 100%)"
                     : "linear-gradient(180deg, #c1c1c1 0%, #a1a1a1 100%)",
                   borderRadius: "3px",
                   "&:hover": {
                     background: darkMode
                       ? "linear-gradient(180deg, #5a5a5a 0%, #777 100%)"
-                      : "linear-gradient(180deg, #999 0%, #777 100%)",
-                  },
+                      : "linear-gradient(180deg, #999 0%, #777 100%)"
+                  }
                 },
                 "& ::-webkit-scrollbar-thumb:active": {
                   background: darkMode
                     ? "linear-gradient(180deg, #666 0%, #888 100%)"
-                    : "linear-gradient(180deg, #777 0%, #555 100%)",
-                },
-              },
+                    : "linear-gradient(180deg, #777 0%, #555 100%)"
+                }
+              }
             }}
           >
             {/* Modern Header */}
@@ -1431,13 +1502,13 @@ const GISProfessionalDashboard = () => {
                 color: "white",
                 textAlign: "center",
                 borderBottom: `1px solid ${darkMode ? "grey.700" : "#e3f2fd"}`,
-                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
               }}
             >
               <Typography
                 variant="h6"
-                sx={{ 
-                  fontWeight: "bold", 
+                sx={{
+                  fontWeight: "bold",
                   fontSize: "1rem",
                   mb: 0.5,
                   display: "flex",
@@ -1457,7 +1528,7 @@ const GISProfessionalDashboard = () => {
                   fontSize: "0.65rem",
                   height: "20px",
                   fontWeight: "bold",
-                  boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
                 }}
               />
             </Box>
@@ -1472,7 +1543,7 @@ const GISProfessionalDashboard = () => {
                     ? "rgba(66, 165, 245, 0.1)"
                     : alpha(theme.palette.primary.main, 0.05),
                   borderRadius: 2,
-                  border: darkMode ? "1px solid #333" : "none",
+                  border: darkMode ? "1px solid #333" : "none"
                 }}
               >
                 <Grid container spacing={0.5}>
@@ -1483,7 +1554,7 @@ const GISProfessionalDashboard = () => {
                         sx={{
                           fontSize: "0.8rem",
                           fontWeight: "bold",
-                          color: "#1976D2",
+                          color: "#1976D2"
                         }}
                       >
                         {activeLayersCount}
@@ -1500,7 +1571,7 @@ const GISProfessionalDashboard = () => {
                         sx={{
                           fontSize: "0.8rem",
                           fontWeight: "bold",
-                          color: "#1976D2",
+                          color: "#1976D2"
                         }}
                       >
                         {points.length}
@@ -1517,7 +1588,7 @@ const GISProfessionalDashboard = () => {
                         sx={{
                           fontSize: "0.8rem",
                           fontWeight: "bold",
-                          color: "#1976D2",
+                          color: "#1976D2"
                         }}
                       >
                         {polygonPoints.length}
@@ -1537,7 +1608,7 @@ const GISProfessionalDashboard = () => {
                   mb: 0.25,
                   boxShadow: "none",
                   border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
-                  bgcolor: darkMode ? "#2a2a2a" : "inherit",
+                  bgcolor: darkMode ? "#2a2a2a" : "inherit"
                 }}
               >
                 <AccordionSummary
@@ -1545,7 +1616,7 @@ const GISProfessionalDashboard = () => {
                   sx={{
                     minHeight: 28,
                     py: 0.25,
-                    "& .MuiAccordionSummary-content": { margin: "2px 0" },
+                    "& .MuiAccordionSummary-content": { margin: "2px 0" }
                   }}
                 >
                   <Typography
@@ -1553,7 +1624,7 @@ const GISProfessionalDashboard = () => {
                     sx={{
                       fontWeight: "bold",
                       color: "#1976D2",
-                      fontSize: "0.85rem",
+                      fontSize: "0.85rem"
                     }}
                   >
                     🛐️ Professional Tools
@@ -1576,6 +1647,16 @@ const GISProfessionalDashboard = () => {
                           fontWeight: "bold",
                           textTransform: "none",
                           fontSize: "0.7rem",
+                          bgcolor:
+                            points.length > 0 || polygonPoints.length > 0
+                              ? "rgba(244, 67, 54, 0.08)"
+                              : "inherit",
+                          "&:hover": {
+                            bgcolor:
+                              points.length > 0 || polygonPoints.length > 0
+                                ? "rgba(244, 67, 54, 0.15)"
+                                : "inherit"
+                          },
                           py: 1,
                           px: 0.5,
                           minHeight: 38,
@@ -1590,8 +1671,8 @@ const GISProfessionalDashboard = () => {
                           transition: "all 0.3s ease",
                           "&:hover": {
                             transform: "translateY(-1px)",
-                            boxShadow: "0 4px 12px rgba(33, 150, 243, 0.3)",
-                          },
+                            boxShadow: "0 4px 12px rgba(33, 150, 243, 0.3)"
+                          }
                         }}
                       >
                         {isDrawing ? "Stop" : "Distance"}
@@ -1628,8 +1709,8 @@ const GISProfessionalDashboard = () => {
                           transition: "all 0.3s ease",
                           "&:hover": {
                             transform: "translateY(-1px)",
-                            boxShadow: "0 4px 12px rgba(156, 39, 176, 0.3)",
-                          },
+                            boxShadow: "0 4px 12px rgba(156, 39, 176, 0.3)"
+                          }
                         }}
                       >
                         {isPolygonDrawing ? "Stop" : "Polygon"}
@@ -1663,8 +1744,8 @@ const GISProfessionalDashboard = () => {
                           transition: "all 0.3s ease",
                           "&:hover": {
                             transform: "translateY(-1px)",
-                            boxShadow: "0 4px 12px rgba(255, 152, 0, 0.3)",
-                          },
+                            boxShadow: "0 4px 12px rgba(255, 152, 0, 0.3)"
+                          }
                         }}
                       >
                         {showElevation ? "Stop" : "Elevation"}
@@ -1697,8 +1778,8 @@ const GISProfessionalDashboard = () => {
                           transition: "all 0.3s ease",
                           "&:hover": {
                             transform: "translateY(-1px)",
-                            boxShadow: "0 4px 12px rgba(33, 150, 243, 0.3)",
-                          },
+                            boxShadow: "0 4px 12px rgba(33, 150, 243, 0.3)"
+                          }
                         }}
                       >
                         {showInfrastructure ? "Stop" : "Infrastructure"}
@@ -1732,11 +1813,11 @@ const GISProfessionalDashboard = () => {
                           transition: "all 0.3s ease",
                           "&:hover": {
                             backgroundColor: "rgba(255, 87, 34, 0.08)",
-                            transform: "translateY(-1px)",
+                            transform: "translateY(-1px)"
                           },
                           "&:disabled": {
-                            opacity: 0.5,
-                          },
+                            opacity: 0.5
+                          }
                         }}
                       >
                         🧧 Clear
@@ -1753,7 +1834,7 @@ const GISProfessionalDashboard = () => {
                   mb: 0.25,
                   boxShadow: "none",
                   border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
-                  bgcolor: darkMode ? "#2a2a2a" : "inherit",
+                  bgcolor: darkMode ? "#2a2a2a" : "inherit"
                 }}
               >
                 <AccordionSummary
@@ -1761,7 +1842,7 @@ const GISProfessionalDashboard = () => {
                   sx={{
                     minHeight: 32,
                     py: 0.5,
-                    "& .MuiAccordionSummary-content": { margin: "4px 0" },
+                    "& .MuiAccordionSummary-content": { margin: "4px 0" }
                   }}
                 >
                   <Typography
@@ -1769,7 +1850,7 @@ const GISProfessionalDashboard = () => {
                     sx={{
                       fontWeight: "bold",
                       color: "#1976D2",
-                      fontSize: "0.9rem",
+                      fontSize: "0.9rem"
                     }}
                   >
                     🎯 Data Manager
@@ -1782,7 +1863,7 @@ const GISProfessionalDashboard = () => {
                       sx={{
                         p: 1,
                         bgcolor: alpha(theme.palette.primary.main, 0.05),
-                        borderRadius: 2,
+                        borderRadius: 2
                       }}
                     >
                       <Typography
@@ -1791,7 +1872,7 @@ const GISProfessionalDashboard = () => {
                           fontWeight: "bold",
                           color: "primary.main",
                           mb: 1,
-                          fontSize: "0.7rem",
+                          fontSize: "0.7rem"
                         }}
                       >
                         💾 Quick Save
@@ -1819,9 +1900,9 @@ const GISProfessionalDashboard = () => {
                                 bgcolor:
                                   points.length >= 2
                                     ? "#2E7D32"
-                                    : "rgba(76, 175, 80, 0.08)",
+                                    : "rgba(76, 175, 80, 0.08)"
                               },
-                              "&:disabled": { opacity: 0.3 },
+                              "&:disabled": { opacity: 0.3 }
                             }}
                           >
                             Distance
@@ -1854,9 +1935,9 @@ const GISProfessionalDashboard = () => {
                                 bgcolor:
                                   polygonPoints.length >= 3
                                     ? "#7B1FA2"
-                                    : "rgba(156, 39, 176, 0.08)",
+                                    : "rgba(156, 39, 176, 0.08)"
                               },
-                              "&:disabled": { opacity: 0.3 },
+                              "&:disabled": { opacity: 0.3 }
                             }}
                           >
                             Polygon
@@ -1871,7 +1952,9 @@ const GISProfessionalDashboard = () => {
                         p: 1.5,
                         bgcolor: darkMode ? "#2a2a2a" : "#f8f9fa",
                         borderRadius: 2,
-                        border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
+                        border: darkMode
+                          ? "1px solid #333"
+                          : "1px solid #e3f2fd"
                       }}
                     >
                       <Typography
@@ -1882,7 +1965,7 @@ const GISProfessionalDashboard = () => {
                           mb: 1.5,
                           fontSize: "0.8rem",
                           display: "flex",
-                          alignItems: "center",
+                          alignItems: "center"
                         }}
                       >
                         <Visibility sx={{ mr: 0.5, fontSize: 16 }} />
@@ -1906,17 +1989,19 @@ const GISProfessionalDashboard = () => {
                           fontSize: "0.75rem",
                           py: 1.2,
                           borderRadius: 2,
-                          background: "linear-gradient(135deg, #1976D2 0%, #1565C0 100%)",
+                          background:
+                            "linear-gradient(135deg, #1976D2 0%, #1565C0 100%)",
                           boxShadow: "0 4px 12px rgba(25, 118, 210, 0.3)",
                           "&:hover": {
-                            background: "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)",
+                            background:
+                              "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)",
                             transform: "translateY(-2px)",
-                            boxShadow: "0 6px 20px rgba(25, 118, 210, 0.4)",
+                            boxShadow: "0 6px 20px rgba(25, 118, 210, 0.4)"
                           },
                           "&:disabled": {
-                            opacity: 0.5,
+                            opacity: 0.5
                           },
-                          transition: "all 0.3s ease",
+                          transition: "all 0.3s ease"
                         }}
                       >
                         📊 View All Saved Data
@@ -1932,7 +2017,7 @@ const GISProfessionalDashboard = () => {
                   mb: 0.25,
                   boxShadow: "none",
                   border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
-                  bgcolor: darkMode ? "#2a2a2a" : "inherit",
+                  bgcolor: darkMode ? "#2a2a2a" : "inherit"
                 }}
               >
                 <AccordionSummary
@@ -1940,7 +2025,7 @@ const GISProfessionalDashboard = () => {
                   sx={{
                     minHeight: 32,
                     py: 0.5,
-                    "& .MuiAccordionSummary-content": { margin: "4px 0" },
+                    "& .MuiAccordionSummary-content": { margin: "4px 0" }
                   }}
                 >
                   <Typography
@@ -1948,7 +2033,7 @@ const GISProfessionalDashboard = () => {
                     sx={{
                       fontWeight: "bold",
                       color: "#1976D2",
-                      fontSize: "0.9rem",
+                      fontSize: "0.9rem"
                     }}
                   >
                     📏 Units & Export
@@ -1961,7 +2046,7 @@ const GISProfessionalDashboard = () => {
                       sx={{
                         p: 1,
                         bgcolor: alpha(theme.palette.info.main, 0.05),
-                        borderRadius: 2,
+                        borderRadius: 2
                       }}
                     >
                       <Stack
@@ -2022,21 +2107,21 @@ const GISProfessionalDashboard = () => {
                                 formatted: `${(totalDistance / 1000).toFixed(
                                   2
                                 )} km`,
-                                points: points.length,
+                                points: points.length
                               },
                               area: {
                                 value: polygonArea,
                                 formatted: `${(polygonArea / 1000000).toFixed(
                                   2
                                 )} km²`,
-                                points: polygonPoints.length,
-                              },
+                                points: polygonPoints.length
+                              }
                             },
                             coordinates: points.concat(polygonPoints),
                             metadata: {
                               layers: activeLayers,
-                              baseMap: selectedBaseMap,
-                            },
+                              baseMap: selectedBaseMap
+                            }
                           };
                           const blob = new Blob(
                             [JSON.stringify(exportData, null, 2)],
@@ -2075,7 +2160,7 @@ const GISProfessionalDashboard = () => {
                           });
                           const csvContent = csvHeader + csvRows.join("\n");
                           const blob = new Blob([csvContent], {
-                            type: "text/csv",
+                            type: "text/csv"
                           });
                           const url = URL.createObjectURL(blob);
                           const a = document.createElement("a");
@@ -2100,7 +2185,7 @@ const GISProfessionalDashboard = () => {
                   mb: 0.25,
                   boxShadow: "none",
                   border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
-                  bgcolor: darkMode ? "#2a2a2a" : "inherit",
+                  bgcolor: darkMode ? "#2a2a2a" : "inherit"
                 }}
               >
                 <AccordionSummary
@@ -2108,7 +2193,7 @@ const GISProfessionalDashboard = () => {
                   sx={{
                     minHeight: 28,
                     py: 0.25,
-                    "& .MuiAccordionSummary-content": { margin: "2px 0" },
+                    "& .MuiAccordionSummary-content": { margin: "2px 0" }
                   }}
                 >
                   <Typography
@@ -2116,7 +2201,7 @@ const GISProfessionalDashboard = () => {
                     sx={{
                       fontWeight: "bold",
                       color: "#1976D2",
-                      fontSize: "0.85rem",
+                      fontSize: "0.85rem"
                     }}
                   >
                     🗺️ Base Maps
@@ -2145,15 +2230,15 @@ const GISProfessionalDashboard = () => {
                           border: "1px solid #e0e0e0 !important",
                           "&.Mui-selected": {
                             bgcolor: alpha(theme.palette.primary.main, 0.1),
-                            borderColor: `${theme.palette.primary.main} !important`,
-                          },
+                            borderColor: `${theme.palette.primary.main} !important`
+                          }
                         }}
                       >
                         <Box
                           sx={{
                             display: "flex",
                             alignItems: "center",
-                            width: "100%",
+                            width: "100%"
                           }}
                         >
                           <Typography sx={{ mr: 1, fontSize: "1rem" }}>
@@ -2190,7 +2275,7 @@ const GISProfessionalDashboard = () => {
                   mb: 0.25,
                   boxShadow: "none",
                   border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
-                  bgcolor: darkMode ? "#2a2a2a" : "inherit",
+                  bgcolor: darkMode ? "#2a2a2a" : "inherit"
                 }}
               >
                 <AccordionSummary
@@ -2198,7 +2283,7 @@ const GISProfessionalDashboard = () => {
                   sx={{
                     minHeight: 32,
                     py: 0.5,
-                    "& .MuiAccordionSummary-content": { margin: "4px 0" },
+                    "& .MuiAccordionSummary-content": { margin: "4px 0" }
                   }}
                 >
                   <Typography
@@ -2206,7 +2291,7 @@ const GISProfessionalDashboard = () => {
                     sx={{
                       fontWeight: "bold",
                       color: "#1976D2",
-                      fontSize: "0.9rem",
+                      fontSize: "0.9rem"
                     }}
                   >
                     🐛 Debug Tools
@@ -2241,8 +2326,8 @@ const GISProfessionalDashboard = () => {
                           backgroundColor: showDebugLogs
                             ? "#388E3C"
                             : "rgba(108, 117, 125, 0.1)",
-                          borderColor: showDebugLogs ? "#388E3C" : "#495057",
-                        },
+                          borderColor: showDebugLogs ? "#388E3C" : "#495057"
+                        }
                       }}
                     >
                       {showDebugLogs ? "Hide Logs" : "Show Logs"}
@@ -2258,7 +2343,7 @@ const GISProfessionalDashboard = () => {
                   mb: 0.25,
                   boxShadow: "none",
                   border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
-                  bgcolor: darkMode ? "#2a2a2a" : "inherit",
+                  bgcolor: darkMode ? "#2a2a2a" : "inherit"
                 }}
               >
                 <AccordionSummary
@@ -2266,7 +2351,7 @@ const GISProfessionalDashboard = () => {
                   sx={{
                     minHeight: 32,
                     py: 0.5,
-                    "& .MuiAccordionSummary-content": { margin: "4px 0" },
+                    "& .MuiAccordionSummary-content": { margin: "4px 0" }
                   }}
                 >
                   <Typography
@@ -2274,7 +2359,7 @@ const GISProfessionalDashboard = () => {
                     sx={{
                       fontWeight: "bold",
                       color: "#1976D2",
-                      fontSize: "0.9rem",
+                      fontSize: "0.9rem"
                     }}
                   >
                     🔖 Quick Bookmarks ({bookmarks.length})
@@ -2295,10 +2380,10 @@ const GISProfessionalDashboard = () => {
                           name: `Location ${bookmarks.length + 1}`,
                           coords: {
                             lat: liveCoordinates.lat,
-                            lng: liveCoordinates.lng,
+                            lng: liveCoordinates.lng
                           },
                           timestamp: new Date().toLocaleString(),
-                          zoom: mapZoom,
+                          zoom: mapZoom
                         };
                         setBookmarks((prev) => [...prev, newBookmark]);
                         console.log(
@@ -2315,8 +2400,8 @@ const GISProfessionalDashboard = () => {
                         color: "#4CAF50",
                         "&:hover": {
                           backgroundColor: "rgba(76, 175, 80, 0.08)",
-                          borderColor: "#2E7D32",
-                        },
+                          borderColor: "#2E7D32"
+                        }
                       }}
                     >
                       Add Current View
@@ -2328,7 +2413,7 @@ const GISProfessionalDashboard = () => {
                           p: 2,
                           bgcolor: alpha(theme.palette.info.main, 0.05),
                           borderRadius: 2,
-                          textAlign: "center",
+                          textAlign: "center"
                         }}
                       >
                         <Bookmark
@@ -2357,8 +2442,8 @@ const GISProfessionalDashboard = () => {
                                 ),
                                 borderColor: "primary.main",
                                 transform: "translateY(-1px)",
-                                boxShadow: "0 2px 8px rgba(33, 150, 243, 0.2)",
-                              },
+                                boxShadow: "0 2px 8px rgba(33, 150, 243, 0.2)"
+                              }
                             }}
                             onClick={() => {
                               console.log(
@@ -2419,7 +2504,7 @@ const GISProfessionalDashboard = () => {
                                     sx={{
                                       color: "primary.main",
                                       opacity: 0.7,
-                                      "&:hover": { opacity: 1 },
+                                      "&:hover": { opacity: 1 }
                                     }}
                                   >
                                     <Settings sx={{ fontSize: 14 }} />
@@ -2435,7 +2520,7 @@ const GISProfessionalDashboard = () => {
                                     sx={{
                                       color: "error.main",
                                       opacity: 0.7,
-                                      "&:hover": { opacity: 1 },
+                                      "&:hover": { opacity: 1 }
                                     }}
                                   >
                                     <Clear sx={{ fontSize: 14 }} />
@@ -2454,23 +2539,26 @@ const GISProfessionalDashboard = () => {
           </Drawer>
         </Slide>
 
-        {/* Main Map Area */}
+        {/* Main Map Area - Responsive to sidebars */}
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             display: "flex",
-            position: "relative",
-            // Remove left margin - let sidebar overlay the map instead
+            position: "absolute",
+            left: leftSidebarOpen ? leftDrawerWidth : 0,
+            right: rightSidebarOpen ? rightDrawerWidth : 0,
+            // Adjust margins based on sidebar state
             ml: 0,
-            // Don't adjust right margin - let right sidebar overlay
-            transition: theme.transitions.create(["margin"], {
+            mr: 0,
+            transition: theme.transitions.create(["margin", "left", "right"], {
               easing: theme.transitions.easing.easeInOut,
-              duration: theme.transitions.duration.standard,
+              duration: theme.transitions.duration.standard
             }),
             overflow: "hidden",
-            width: '100vw', // Full viewport width
-            height: 'calc(100vh - 64px)', // Full height minus navbar
+            width: "auto", // Auto width to adjust with sidebars
+            height: "calc(100vh - 64px)", // Full height minus navbar
+            zIndex: 1 // Lower z-index so sidebars appear on top
           }}
         >
           {/* Enhanced Map with Integrated Search */}
@@ -2513,7 +2601,6 @@ const GISProfessionalDashboard = () => {
               elevationClickCount={elevationClickCount}
               showDebugLogs={showDebugLogs}
             />
-            
           </Box>
 
           {/* Green measurement boxes removed as requested */}
@@ -2524,20 +2611,23 @@ const GISProfessionalDashboard = () => {
               sx={{
                 position: "absolute",
                 bottom: 80, // Above the map scale
-                left: 16, // Fixed position, map handles transform
+                left: leftSidebarOpen ? leftDrawerWidth + 16 : 16, // Adjust position based on sidebar state
                 p: 1,
                 bgcolor: "rgba(33, 150, 243, 0.9)",
                 color: "white",
                 borderRadius: 2,
                 boxShadow: "0 2px 8px rgba(33, 150, 243, 0.3)",
                 zIndex: 1100,
-                transition: theme.transitions.create(['left'], {
+                transition: theme.transitions.create(["left"], {
                   easing: theme.transitions.easing.easeInOut,
-                  duration: theme.transitions.duration.standard,
-                }),
+                  duration: theme.transitions.duration.standard
+                })
               }}
             >
-              <Typography variant="caption" sx={{ fontWeight: "bold", fontSize: "0.7rem" }}>
+              <Typography
+                variant="caption"
+                sx={{ fontWeight: "bold", fontSize: "0.7rem" }}
+              >
                 ✅ Boundary Loaded
               </Typography>
             </Paper>
@@ -2548,17 +2638,17 @@ const GISProfessionalDashboard = () => {
             sx={{
               position: "absolute",
               bottom: 140, // Above boundary indicator
-              left: 16, // Fixed position, map handles transform
+              left: leftSidebarOpen ? leftDrawerWidth + 16 : 16, // Adjust position based on sidebar state
               borderRadius: 2,
               overflow: "hidden",
               bgcolor: "rgba(255,255,255,0.95)",
               backdropFilter: "blur(10px)",
               zIndex: 1200,
               boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-              transition: theme.transitions.create(['left'], {
+              transition: theme.transitions.create(["left"], {
                 easing: theme.transitions.easing.easeInOut,
-                duration: theme.transitions.duration.standard,
-              }),
+                duration: theme.transitions.duration.standard
+              })
             }}
           >
             <Stack spacing={0}>
@@ -2587,12 +2677,14 @@ const GISProfessionalDashboard = () => {
               </Tooltip>
               <Divider />
               <Tooltip title="Street View" placement="right">
-                <IconButton 
-                  size="small" 
+                <IconButton
+                  size="small"
                   onClick={handleStreetView}
                   sx={{
                     color: streetViewOpen ? "primary.main" : "inherit",
-                    bgcolor: streetViewOpen ? "rgba(25, 118, 210, 0.1)" : "transparent",
+                    bgcolor: streetViewOpen
+                      ? "rgba(25, 118, 210, 0.1)"
+                      : "transparent"
                   }}
                 >
                   <Visibility />
@@ -2607,13 +2699,12 @@ const GISProfessionalDashboard = () => {
             </Stack>
           </Paper>
 
-
           {/* Map Scale Display - Bottom Left */}
           <Paper
             sx={{
               position: "absolute",
               bottom: 16,
-              left: 16, // Fixed position, map handles transform
+              left: leftSidebarOpen ? leftDrawerWidth + 16 : 16, // Adjust position based on sidebar state
               p: 1,
               bgcolor: darkMode
                 ? "rgba(0, 0, 0, 0.85)"
@@ -2621,10 +2712,10 @@ const GISProfessionalDashboard = () => {
               color: darkMode ? "#fff" : "inherit",
               zIndex: 1000,
               borderRadius: 2,
-              transition: theme.transitions.create(['left'], {
+              transition: theme.transitions.create(["left"], {
                 easing: theme.transitions.easing.easeInOut,
-                duration: theme.transitions.duration.standard,
-              }),
+                duration: theme.transitions.duration.standard
+              })
             }}
           >
             <Typography variant="caption" sx={{ fontWeight: "bold" }}>
@@ -2637,7 +2728,7 @@ const GISProfessionalDashboard = () => {
             sx={{
               position: "absolute",
               bottom: 16,
-              right: 16, // Fixed position, doesn't move with sidebar
+              right: rightSidebarOpen ? rightDrawerWidth + 16 : 16, // Adjust position based on sidebar state
               p: 1,
               bgcolor: darkMode
                 ? "rgba(0, 0, 0, 0.85)"
@@ -2646,7 +2737,10 @@ const GISProfessionalDashboard = () => {
               zIndex: 1000,
               borderRadius: 2,
               minWidth: 200,
-              // No transition needed as position is now fixed
+              transition: theme.transitions.create(["right"], {
+                easing: theme.transitions.easing.easeInOut,
+                duration: theme.transitions.duration.standard
+              })
             }}
           >
             <Typography
@@ -2661,7 +2755,7 @@ const GISProfessionalDashboard = () => {
                 fontFamily: "monospace",
                 fontSize: "0.75rem",
                 color: hoverCoordinates ? "primary.main" : "inherit",
-                fontWeight: hoverCoordinates ? "bold" : "normal",
+                fontWeight: hoverCoordinates ? "bold" : "normal"
               }}
             >
               Lat: {(hoverCoordinates || liveCoordinates).lat.toFixed(6)}°
@@ -2673,7 +2767,7 @@ const GISProfessionalDashboard = () => {
                 fontFamily: "monospace",
                 fontSize: "0.75rem",
                 color: hoverCoordinates ? "primary.main" : "inherit",
-                fontWeight: hoverCoordinates ? "bold" : "normal",
+                fontWeight: hoverCoordinates ? "bold" : "normal"
               }}
             >
               Lng: {(hoverCoordinates || liveCoordinates).lng.toFixed(6)}°
@@ -2695,7 +2789,7 @@ const GISProfessionalDashboard = () => {
                     display: "block",
                     mt: 1,
                     color: "warning.main",
-                    fontSize: "0.7rem",
+                    fontSize: "0.7rem"
                   }}
                 >
                   🏔️ Elevation Mode: Click{" "}
@@ -2724,15 +2818,20 @@ const GISProfessionalDashboard = () => {
                 border: "1px solid rgba(0, 255, 0, 0.4)",
                 backdropFilter: "blur(15px)",
                 boxShadow: "0 6px 25px rgba(0, 255, 0, 0.2)",
-                transition: "all 0.3s ease",
+                transition: "all 0.3s ease"
               }}
             >
-              <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ mb: 1 }}
+              >
                 <Typography
                   variant="caption"
-                  sx={{ 
-                    color: "#00FF00", 
-                    fontWeight: "bold", 
+                  sx={{
+                    color: "#00FF00",
+                    fontWeight: "bold",
                     fontSize: "0.75rem",
                     display: "flex",
                     alignItems: "center",
@@ -2744,8 +2843,8 @@ const GISProfessionalDashboard = () => {
                 <IconButton
                   size="small"
                   onClick={() => setShowDebugLogs(false)}
-                  sx={{ 
-                    color: "#FF5722", 
+                  sx={{
+                    color: "#FF5722",
                     p: 0.5,
                     "&:hover": {
                       bgcolor: "rgba(255, 87, 34, 0.2)",
@@ -2803,7 +2902,7 @@ const GISProfessionalDashboard = () => {
                     >
                       {log}
                     </Typography>
-                  )
+                  );
                 })}
               </Box>
               {debugLogs.length > 10 && (
@@ -2830,8 +2929,16 @@ const GISProfessionalDashboard = () => {
               sx={{
                 position: "absolute",
                 bottom: 0,
-                left: elevationChartFullWidth ? 0 : leftSidebarOpen ? `${leftDrawerWidth}px` : 0,
-                right: elevationChartFullWidth ? 0 : rightSidebarOpen ? `${rightDrawerWidth}px` : 0,
+                left: elevationChartFullWidth
+                  ? 0
+                  : leftSidebarOpen
+                  ? `${leftDrawerWidth}px`
+                  : 0,
+                right: elevationChartFullWidth
+                  ? 0
+                  : rightSidebarOpen
+                  ? `${rightDrawerWidth}px`
+                  : 0,
                 height: elevationChartFullWidth ? 400 : 300,
                 bgcolor: darkMode
                   ? "rgba(0, 0, 0, 0.95)"
@@ -2842,10 +2949,13 @@ const GISProfessionalDashboard = () => {
                 borderTopRightRadius: elevationChartFullWidth ? 0 : 16,
                 boxShadow: "0 -8px 32px rgba(0,0,0,0.3)",
                 backdropFilter: "blur(20px)",
-                transition: theme.transitions.create(['left', 'right', 'height', 'border-radius'], {
-                  easing: theme.transitions.easing.easeInOut,
-                  duration: theme.transitions.duration.standard,
-                }),
+                transition: theme.transitions.create(
+                  ["left", "right", "height", "border-radius"],
+                  {
+                    easing: theme.transitions.easing.easeInOut,
+                    duration: theme.transitions.duration.standard
+                  }
+                )
               }}
             >
               <Box sx={{ p: 2, height: "100%" }}>
@@ -2882,7 +2992,7 @@ const GISProfessionalDashboard = () => {
                       sx={{
                         bgcolor: darkMode
                           ? "rgba(25, 118, 210, 0.2)"
-                          : "rgba(25, 118, 210, 0.1)",
+                          : "rgba(25, 118, 210, 0.1)"
                       }}
                     />
                     <Chip
@@ -2893,10 +3003,10 @@ const GISProfessionalDashboard = () => {
                       sx={{
                         bgcolor: darkMode
                           ? "rgba(76, 175, 80, 0.2)"
-                          : "rgba(76, 175, 80, 0.1)",
+                          : "rgba(76, 175, 80, 0.1)"
                       }}
                     />
-                    
+
                     {/* Save Elevation Button */}
                     <Tooltip title="Save Elevation Profile">
                       <IconButton
@@ -2906,7 +3016,7 @@ const GISProfessionalDashboard = () => {
                           saveElevationProfile(profileName);
                           addLog(`💾 Saved elevation profile: ${profileName}`);
                         }}
-                        sx={{ 
+                        sx={{
                           color: "success.main",
                           "&:hover": {
                             bgcolor: "rgba(76, 175, 80, 0.1)"
@@ -2916,7 +3026,7 @@ const GISProfessionalDashboard = () => {
                         <Save />
                       </IconButton>
                     </Tooltip>
-                    
+
                     {/* View Saved Elevations Button */}
                     <Tooltip title="View Saved Elevations">
                       <IconButton
@@ -2926,20 +3036,26 @@ const GISProfessionalDashboard = () => {
                           const elevations = [];
                           for (let i = 0; i < localStorage.length; i++) {
                             const key = localStorage.key(i);
-                            if (key && key.startsWith('elevation_')) {
+                            if (key && key.startsWith("elevation_")) {
                               try {
-                                const data = JSON.parse(localStorage.getItem(key));
+                                const data = JSON.parse(
+                                  localStorage.getItem(key)
+                                );
                                 elevations.push({ ...data, key });
                               } catch (error) {
-                                console.warn('Error loading elevation:', key, error);
+                                console.warn(
+                                  "Error loading elevation:",
+                                  key,
+                                  error
+                                );
                               }
                             }
                           }
                           setSavedElevations(elevations);
-                          setSelectedDataType('elevations');
+                          setSelectedDataType("elevations");
                           setShowSavedDataDialog(true);
                         }}
-                        sx={{ 
+                        sx={{
                           color: "info.main",
                           "&:hover": {
                             bgcolor: "rgba(33, 150, 243, 0.1)"
@@ -2949,16 +3065,26 @@ const GISProfessionalDashboard = () => {
                         <History />
                       </IconButton>
                     </Tooltip>
-                    
+
                     {/* Toggle Chart Width Button */}
-                    <Tooltip title={elevationChartFullWidth ? "Normal Width" : "Full Width"}>
+                    <Tooltip
+                      title={
+                        elevationChartFullWidth ? "Normal Width" : "Full Width"
+                      }
+                    >
                       <IconButton
                         size="small"
-                        onClick={() => setElevationChartFullWidth(!elevationChartFullWidth)}
-                        sx={{ 
-                          color: elevationChartFullWidth ? "warning.main" : "text.secondary",
+                        onClick={() =>
+                          setElevationChartFullWidth(!elevationChartFullWidth)
+                        }
+                        sx={{
+                          color: elevationChartFullWidth
+                            ? "warning.main"
+                            : "text.secondary",
                           "&:hover": {
-                            bgcolor: elevationChartFullWidth ? "rgba(255, 152, 0, 0.1)" : "rgba(158, 158, 158, 0.1)"
+                            bgcolor: elevationChartFullWidth
+                              ? "rgba(255, 152, 0, 0.1)"
+                              : "rgba(158, 158, 158, 0.1)"
                           }
                         }}
                       >
@@ -2992,10 +3118,10 @@ const GISProfessionalDashboard = () => {
                     display: "flex",
                     alignItems: "end",
                     justifyContent: "space-between",
-                    transition: theme.transitions.create(['height'], {
+                    transition: theme.transitions.create(["height"], {
                       easing: theme.transitions.easing.easeInOut,
-                      duration: theme.transitions.duration.standard,
-                    }),
+                      duration: theme.transitions.duration.standard
+                    })
                   }}
                 >
                   {elevationData.map((point, index) => {
@@ -3027,8 +3153,8 @@ const GISProfessionalDashboard = () => {
                           "&:hover": {
                             transform: "scaleX(2)",
                             zIndex: 10,
-                            bgcolor: "primary.main",
-                          },
+                            bgcolor: "primary.main"
+                          }
                         }}
                         title={`Distance: ${formatDistance(
                           point.distance
@@ -3085,7 +3211,8 @@ const GISProfessionalDashboard = () => {
                   : "-2px 0 12px rgba(0,0,0,0.1)",
                 top: "64px",
                 height: "calc(100vh - 64px)",
-              },
+                zIndex: 10 // Add z-index to ensure it appears on top of the map
+              }
             }}
           >
             {/* Right Sidebar Header */}
@@ -3097,7 +3224,7 @@ const GISProfessionalDashboard = () => {
                 } 0%, ${darkMode ? "rgb(123,31,162)" : "#7B1FA2"} 100%)`,
                 color: "white",
                 textAlign: "center",
-                borderBottom: `1px solid ${darkMode ? "grey.700" : "#e3f2fd"}`,
+                borderBottom: `1px solid ${darkMode ? "grey.700" : "#e3f2fd"}`
               }}
             >
               <Typography
@@ -3114,20 +3241,21 @@ const GISProfessionalDashboard = () => {
                   bgcolor: "rgba(255,255,255,0.2)",
                   color: "white",
                   fontSize: "0.6rem",
-                  height: "18px",
+                  height: "18px"
                 }}
               />
             </Box>
 
-            <Box sx={{ 
-              p: 1, 
-              overflow: "auto", 
-              height: "calc(100vh - 140px)",
-              display: "flex",
-              flexDirection: "column",
-              gap: 1.5
-            }}>
-              
+            <Box
+              sx={{
+                p: 1,
+                overflow: "auto",
+                height: "calc(100vh - 140px)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 1.5
+              }}
+            >
               {/* Elevation Tab - Full Height when Active */}
               {showElevation && (
                 <Paper
@@ -3138,82 +3266,129 @@ const GISProfessionalDashboard = () => {
                     border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
                     height: "calc(100vh - 200px)",
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "column"
                   }}
                 >
                   <Typography
                     variant="subtitle2"
-                    sx={{ fontWeight: "bold", mb: 1.5, display: "flex", alignItems: "center" }}
+                    sx={{
+                      fontWeight: "bold",
+                      mb: 1.5,
+                      display: "flex",
+                      alignItems: "center"
+                    }}
                   >
-                    <TrendingUp sx={{ mr: 1, fontSize: 18, color: "warning.main" }} />
+                    <TrendingUp
+                      sx={{ mr: 1, fontSize: 18, color: "warning.main" }}
+                    />
                     🏦️ Elevation Analysis
                   </Typography>
-                  
+
                   <Box sx={{ flex: 1, overflow: "auto" }}>
                     <Stack spacing={2}>
                       {/* Instructions */}
-                      <Paper 
-                        sx={{ 
-                          p: 1.5, 
-                          bgcolor: darkMode ? "rgba(255,152,0,0.1)" : "rgba(255,152,0,0.05)",
+                      <Paper
+                        sx={{
+                          p: 1.5,
+                          bgcolor: darkMode
+                            ? "rgba(255,152,0,0.1)"
+                            : "rgba(255,152,0,0.05)",
                           borderRadius: 1,
                           border: "1px solid rgba(255,152,0,0.3)"
                         }}
                       >
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1, color: "warning.main" }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1, color: "warning.main" }}
+                        >
                           Instructions
                         </Typography>
-                        <Typography variant="caption" sx={{ display: "block", mb: 0.5 }}>
+                        <Typography
+                          variant="caption"
+                          sx={{ display: "block", mb: 0.5 }}
+                        >
                           1. Click on two points on the map
                         </Typography>
-                        <Typography variant="caption" sx={{ display: "block", mb: 0.5 }}>
+                        <Typography
+                          variant="caption"
+                          sx={{ display: "block", mb: 0.5 }}
+                        >
                           2. View elevation profile chart
                         </Typography>
                         <Typography variant="caption" sx={{ display: "block" }}>
                           3. Save or export elevation data
                         </Typography>
                       </Paper>
-                      
+
                       {/* Elevation Points Status */}
                       <Box>
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1 }}
+                        >
                           Selection Status
                         </Typography>
-                        <Paper 
-                          sx={{ 
-                            p: 1.5, 
-                            bgcolor: darkMode ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.05)",
+                        <Paper
+                          sx={{
+                            p: 1.5,
+                            bgcolor: darkMode
+                              ? "rgba(0,0,0,0.3)"
+                              : "rgba(0,0,0,0.05)",
                             borderRadius: 1
                           }}
                         >
                           <Stack spacing={1}>
-                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                              <Typography variant="caption">Points Selected:</Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between"
+                              }}
+                            >
+                              <Typography variant="caption">
+                                Points Selected:
+                              </Typography>
                               <Typography variant="caption" fontWeight="bold">
                                 {elevationClickCount} / 2
                               </Typography>
                             </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between"
+                              }}
+                            >
                               <Typography variant="caption">Status:</Typography>
-                              <Typography 
-                                variant="caption" 
+                              <Typography
+                                variant="caption"
                                 fontWeight="bold"
-                                sx={{ 
-                                  color: elevationClickCount === 2 ? "success.main" : "warning.main" 
+                                sx={{
+                                  color:
+                                    elevationClickCount === 2
+                                      ? "success.main"
+                                      : "warning.main"
                                 }}
                               >
-                                {elevationClickCount === 0 ? "Select first point" : 
-                                 elevationClickCount === 1 ? "Select second point" : "Profile ready"}
+                                {elevationClickCount === 0
+                                  ? "Select first point"
+                                  : elevationClickCount === 1
+                                  ? "Select second point"
+                                  : "Profile ready"}
                               </Typography>
                             </Box>
                           </Stack>
                         </Paper>
                       </Box>
-                      
+
                       {/* Elevation Chart Controls */}
                       {showElevationChart && (
                         <Box>
-                          <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                          <Typography
+                            variant="body2"
+                            fontWeight="bold"
+                            sx={{ mb: 1 }}
+                          >
                             Chart Controls
                           </Typography>
                           <Stack spacing={1}>
@@ -3225,11 +3400,13 @@ const GISProfessionalDashboard = () => {
                               onClick={() => {
                                 // Toggle full width chart
                                 setShowElevationChart(true);
-                                addLog('📏 Elevation chart expanded to full width');
+                                addLog(
+                                  "📏 Elevation chart expanded to full width"
+                                );
                               }}
-                              sx={{ 
-                                textTransform: "none", 
-                                fontSize: '0.8rem',
+                              sx={{
+                                textTransform: "none",
+                                fontSize: "0.8rem",
                                 bgcolor: "warning.main",
                                 "&:hover": { bgcolor: "warning.dark" }
                               }}
@@ -3245,49 +3422,101 @@ const GISProfessionalDashboard = () => {
                                 const elevationName = `Elevation Profile ${Date.now()}`;
                                 saveElevationProfile(elevationName);
                               }}
-                              sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                              sx={{ textTransform: "none", fontSize: "0.8rem" }}
                             >
                               Save Elevation Data
                             </Button>
                           </Stack>
                         </Box>
                       )}
-                      
+
                       {/* Elevation Statistics */}
                       {elevationData.length > 0 && (
                         <Box>
-                          <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                          <Typography
+                            variant="body2"
+                            fontWeight="bold"
+                            sx={{ mb: 1 }}
+                          >
                             Statistics
                           </Typography>
-                          <Paper 
-                            sx={{ 
-                              p: 1.5, 
-                              bgcolor: darkMode ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.05)",
+                          <Paper
+                            sx={{
+                              p: 1.5,
+                              bgcolor: darkMode
+                                ? "rgba(0,0,0,0.3)"
+                                : "rgba(0,0,0,0.05)",
                               borderRadius: 1
                             }}
                           >
                             <Stack spacing={1}>
-                              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                                <Typography variant="caption">Max Elevation:</Typography>
-                                <Typography variant="caption" fontWeight="bold" color="success.main">
-                                  {Math.max(...elevationData.map(d => d.elevation))}m
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between"
+                                }}
+                              >
+                                <Typography variant="caption">
+                                  Max Elevation:
+                                </Typography>
+                                <Typography
+                                  variant="caption"
+                                  fontWeight="bold"
+                                  color="success.main"
+                                >
+                                  {Math.max(
+                                    ...elevationData.map((d) => d.elevation)
+                                  )}
+                                  m
                                 </Typography>
                               </Box>
-                              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                                <Typography variant="caption">Min Elevation:</Typography>
-                                <Typography variant="caption" fontWeight="bold" color="error.main">
-                                  {Math.min(...elevationData.map(d => d.elevation))}m
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between"
+                                }}
+                              >
+                                <Typography variant="caption">
+                                  Min Elevation:
+                                </Typography>
+                                <Typography
+                                  variant="caption"
+                                  fontWeight="bold"
+                                  color="error.main"
+                                >
+                                  {Math.min(
+                                    ...elevationData.map((d) => d.elevation)
+                                  )}
+                                  m
                                 </Typography>
                               </Box>
-                              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                                <Typography variant="caption">Total Distance:</Typography>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between"
+                                }}
+                              >
+                                <Typography variant="caption">
+                                  Total Distance:
+                                </Typography>
                                 <Typography variant="caption" fontWeight="bold">
-                                  {elevationData.length > 0 ? 
-                                    formatDistance(elevationData[elevationData.length - 1]?.distance || 0) : "0m"}
+                                  {elevationData.length > 0
+                                    ? formatDistance(
+                                        elevationData[elevationData.length - 1]
+                                          ?.distance || 0
+                                      )
+                                    : "0m"}
                                 </Typography>
                               </Box>
-                              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                                <Typography variant="caption">Data Points:</Typography>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  justifyContent: "space-between"
+                                }}
+                              >
+                                <Typography variant="caption">
+                                  Data Points:
+                                </Typography>
                                 <Typography variant="caption" fontWeight="bold">
                                   {elevationData.length}
                                 </Typography>
@@ -3296,10 +3525,14 @@ const GISProfessionalDashboard = () => {
                           </Paper>
                         </Box>
                       )}
-                      
+
                       {/* Elevation Actions */}
                       <Box>
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1 }}
+                        >
                           Actions
                         </Typography>
                         <Stack spacing={1}>
@@ -3313,9 +3546,9 @@ const GISProfessionalDashboard = () => {
                               setElevationClickCount(0);
                               setElevationData([]);
                               setShowElevationChart(false);
-                              addLog('🏦️ Elevation data cleared');
+                              addLog("🏦️ Elevation data cleared");
                             }}
-                            sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                            sx={{ textTransform: "none", fontSize: "0.8rem" }}
                           >
                             Clear Elevation Data
                           </Button>
@@ -3327,9 +3560,9 @@ const GISProfessionalDashboard = () => {
                             onClick={() => {
                               setShowElevation(false);
                               setElevationMode(false);
-                              addLog('🏦️ Elevation panel closed');
+                              addLog("🏦️ Elevation panel closed");
                             }}
-                            sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                            sx={{ textTransform: "none", fontSize: "0.8rem" }}
                           >
                             Close Elevation Panel
                           </Button>
@@ -3339,7 +3572,7 @@ const GISProfessionalDashboard = () => {
                   </Box>
                 </Paper>
               )}
-              
+
               {/* Infrastructure Tab - Full Height when Active */}
               {showInfrastructure && (
                 <Paper
@@ -3350,22 +3583,33 @@ const GISProfessionalDashboard = () => {
                     border: darkMode ? "1px solid #333" : "1px solid #e3f2fd",
                     height: "calc(100vh - 200px)",
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "column"
                   }}
                 >
                   <Typography
                     variant="subtitle2"
-                    sx={{ fontWeight: "bold", mb: 1.5, display: "flex", alignItems: "center" }}
+                    sx={{
+                      fontWeight: "bold",
+                      mb: 1.5,
+                      display: "flex",
+                      alignItems: "center"
+                    }}
                   >
-                    <Business sx={{ mr: 1, fontSize: 18, color: "primary.main" }} />
+                    <Business
+                      sx={{ mr: 1, fontSize: 18, color: "primary.main" }}
+                    />
                     🏢 Infrastructure Management
                   </Typography>
-                  
+
                   <Box sx={{ flex: 1, overflow: "auto" }}>
                     <Stack spacing={2}>
                       {/* Infrastructure Layers */}
                       <Box>
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1 }}
+                        >
                           Layer Controls
                         </Typography>
                         <Stack spacing={1}>
@@ -3373,41 +3617,59 @@ const GISProfessionalDashboard = () => {
                             control={
                               <Switch
                                 checked={activeLayers.roads}
-                                onChange={() => handleLayerToggle('roads')}
+                                onChange={() => handleLayerToggle("roads")}
                                 size="small"
                               />
                             }
                             label="🛣️ Roads & Highways"
-                            sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.85rem' } }}
+                            sx={{
+                              "& .MuiFormControlLabel-label": {
+                                fontSize: "0.85rem"
+                              }
+                            }}
                           />
                           <FormControlLabel
                             control={
                               <Switch
                                 checked={activeLayers.buildings}
-                                onChange={() => handleLayerToggle('buildings')}
+                                onChange={() => handleLayerToggle("buildings")}
                                 size="small"
                               />
                             }
                             label="🏗️ Buildings"
-                            sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.85rem' } }}
+                            sx={{
+                              "& .MuiFormControlLabel-label": {
+                                fontSize: "0.85rem"
+                              }
+                            }}
                           />
                           <FormControlLabel
                             control={
                               <Switch
                                 checked={activeLayers.infrastructure}
-                                onChange={() => handleLayerToggle('infrastructure')}
+                                onChange={() =>
+                                  handleLayerToggle("infrastructure")
+                                }
                                 size="small"
                               />
                             }
                             label="⚡ Utilities"
-                            sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.85rem' } }}
+                            sx={{
+                              "& .MuiFormControlLabel-label": {
+                                fontSize: "0.85rem"
+                              }
+                            }}
                           />
                         </Stack>
                       </Box>
-                      
+
                       {/* Infrastructure Tools */}
                       <Box>
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1 }}
+                        >
                           Analysis Tools
                         </Typography>
                         <Stack spacing={1}>
@@ -3416,7 +3678,7 @@ const GISProfessionalDashboard = () => {
                             fullWidth
                             size="small"
                             startIcon={<LocationOn />}
-                            sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                            sx={{ textTransform: "none", fontSize: "0.8rem" }}
                           >
                             Find Nearest Facility
                           </Button>
@@ -3425,7 +3687,7 @@ const GISProfessionalDashboard = () => {
                             fullWidth
                             size="small"
                             startIcon={<Straighten />}
-                            sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                            sx={{ textTransform: "none", fontSize: "0.8rem" }}
                           >
                             Calculate Coverage
                           </Button>
@@ -3434,56 +3696,96 @@ const GISProfessionalDashboard = () => {
                             fullWidth
                             size="small"
                             startIcon={<TrendingUp />}
-                            sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                            sx={{ textTransform: "none", fontSize: "0.8rem" }}
                           >
                             Network Analysis
                           </Button>
                         </Stack>
                       </Box>
-                      
+
                       {/* Infrastructure Statistics */}
                       <Box>
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1 }}
+                        >
                           Statistics
                         </Typography>
-                        <Paper 
-                          sx={{ 
-                            p: 1.5, 
-                            bgcolor: darkMode ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.05)",
+                        <Paper
+                          sx={{
+                            p: 1.5,
+                            bgcolor: darkMode
+                              ? "rgba(0,0,0,0.3)"
+                              : "rgba(0,0,0,0.05)",
                             borderRadius: 1
                           }}
                         >
                           <Stack spacing={1}>
-                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                              <Typography variant="caption">🛣️ Roads Visible:</Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between"
+                              }}
+                            >
+                              <Typography variant="caption">
+                                🛣️ Roads Visible:
+                              </Typography>
                               <Typography variant="caption" fontWeight="bold">
                                 {activeLayers.roads ? "Yes" : "No"}
                               </Typography>
                             </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                              <Typography variant="caption">🏗️ Buildings Visible:</Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between"
+                              }}
+                            >
+                              <Typography variant="caption">
+                                🏗️ Buildings Visible:
+                              </Typography>
                               <Typography variant="caption" fontWeight="bold">
                                 {activeLayers.buildings ? "Yes" : "No"}
                               </Typography>
                             </Box>
-                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                              <Typography variant="caption">⚡ Utilities Visible:</Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between"
+                              }}
+                            >
+                              <Typography variant="caption">
+                                ⚡ Utilities Visible:
+                              </Typography>
                               <Typography variant="caption" fontWeight="bold">
                                 {activeLayers.infrastructure ? "Yes" : "No"}
                               </Typography>
                             </Box>
                             <Divider sx={{ my: 0.5 }} />
-                            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                              <Typography variant="caption">Map Zoom:</Typography>
-                              <Typography variant="caption" fontWeight="bold">{mapZoom}x</Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between"
+                              }}
+                            >
+                              <Typography variant="caption">
+                                Map Zoom:
+                              </Typography>
+                              <Typography variant="caption" fontWeight="bold">
+                                {mapZoom}x
+                              </Typography>
                             </Box>
                           </Stack>
                         </Paper>
                       </Box>
-                      
+
                       {/* Infrastructure Actions */}
                       <Box>
-                        <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="bold"
+                          sx={{ mb: 1 }}
+                        >
                           Quick Actions
                         </Typography>
                         <Stack spacing={1}>
@@ -3492,9 +3794,9 @@ const GISProfessionalDashboard = () => {
                             fullWidth
                             size="small"
                             startIcon={<Download />}
-                            sx={{ 
-                              textTransform: "none", 
-                              fontSize: '0.8rem',
+                            sx={{
+                              textTransform: "none",
+                              fontSize: "0.8rem",
                               bgcolor: "success.main",
                               "&:hover": { bgcolor: "success.dark" }
                             }}
@@ -3508,9 +3810,9 @@ const GISProfessionalDashboard = () => {
                             startIcon={<Clear />}
                             onClick={() => {
                               setShowInfrastructure(false);
-                              addLog('🏢 Infrastructure panel closed');
+                              addLog("🏢 Infrastructure panel closed");
                             }}
-                            sx={{ textTransform: "none", fontSize: '0.8rem' }}
+                            sx={{ textTransform: "none", fontSize: "0.8rem" }}
                           >
                             Close Infrastructure Panel
                           </Button>
@@ -3526,7 +3828,7 @@ const GISProfessionalDashboard = () => {
                   p: 1.5,
                   borderRadius: 2,
                   bgcolor: darkMode ? "#2a2a2a" : "inherit",
-                  border: darkMode ? "1px solid #333" : "none",
+                  border: darkMode ? "1px solid #333" : "none"
                 }}
               >
                 <Typography
@@ -3561,7 +3863,7 @@ const GISProfessionalDashboard = () => {
                   p: 1.5,
                   borderRadius: 2,
                   bgcolor: darkMode ? "#2a2a2a" : "inherit",
-                  border: darkMode ? "1px solid #333" : "none",
+                  border: darkMode ? "1px solid #333" : "none"
                 }}
               >
                 <Typography
@@ -3611,7 +3913,7 @@ const GISProfessionalDashboard = () => {
                   p: 1.5,
                   borderRadius: 2,
                   bgcolor: darkMode ? "#2a2a2a" : "inherit",
-                  border: darkMode ? "1px solid #333" : "none",
+                  border: darkMode ? "1px solid #333" : "none"
                 }}
               >
                 <Typography
@@ -3627,7 +3929,19 @@ const GISProfessionalDashboard = () => {
                     size="small"
                     startIcon={<CenterFocusStrong />}
                     onClick={handleCenterOnIndia}
-                    sx={{ textTransform: "none" }}
+                    sx={{
+                      textTransform: "none",
+                      bgcolor:
+                        points.length > 0 || polygonPoints.length > 0
+                          ? "rgba(244, 67, 54, 0.08)"
+                          : "inherit",
+                      "&:hover": {
+                        bgcolor:
+                          points.length > 0 || polygonPoints.length > 0
+                            ? "rgba(244, 67, 54, 0.15)"
+                            : "inherit"
+                      }
+                    }}
                   >
                     Center on India
                   </Button>
@@ -3638,7 +3952,19 @@ const GISProfessionalDashboard = () => {
                     startIcon={<Clear />}
                     onClick={handleClearAll}
                     disabled={points.length === 0 && polygonPoints.length === 0}
-                    sx={{ textTransform: "none" }}
+                    sx={{
+                      textTransform: "none",
+                      bgcolor:
+                        points.length > 0 || polygonPoints.length > 0
+                          ? "rgba(244, 67, 54, 0.08)"
+                          : "inherit",
+                      "&:hover": {
+                        bgcolor:
+                          points.length > 0 || polygonPoints.length > 0
+                            ? "rgba(244, 67, 54, 0.15)"
+                            : "inherit"
+                      }
+                    }}
                   >
                     Clear All Data
                   </Button>
@@ -3661,7 +3987,7 @@ const GISProfessionalDashboard = () => {
                   p: 1.5,
                   borderRadius: 2,
                   bgcolor: darkMode ? "#2a2a2a" : "inherit",
-                  border: darkMode ? "1px solid #333" : "none",
+                  border: darkMode ? "1px solid #333" : "none"
                 }}
               >
                 <Typography
@@ -3684,8 +4010,8 @@ const GISProfessionalDashboard = () => {
                       label={layer.charAt(0).toUpperCase() + layer.slice(1)}
                       sx={{
                         "& .MuiFormControlLabel-label": {
-                          fontSize: "0.85rem",
-                        },
+                          fontSize: "0.85rem"
+                        }
                       }}
                     />
                   ))}
@@ -3698,7 +4024,7 @@ const GISProfessionalDashboard = () => {
                   p: 1.5,
                   borderRadius: 2,
                   bgcolor: darkMode ? "#2a2a2a" : "inherit",
-                  border: darkMode ? "1px solid #333" : "none",
+                  border: darkMode ? "1px solid #333" : "none"
                 }}
               >
                 <Typography
@@ -3766,7 +4092,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             background: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           💾 Save Distance Measurement
@@ -3781,28 +4107,28 @@ const GISProfessionalDashboard = () => {
             onChange={(e) => setMeasurementName(e.target.value)}
             placeholder={`Distance Measurement ${Date.now()}`}
             InputLabelProps={{
-              shrink: true,
+              shrink: true
             }}
-            sx={{ 
+            sx={{
               mb: 2,
-              '& .MuiInputBase-input': {
-                color: 'text.primary',
-                backgroundColor: 'background.paper',
+              "& .MuiInputBase-input": {
+                color: "text.primary",
+                backgroundColor: "background.paper"
               },
-              '& .MuiInputLabel-root': {
-                color: 'text.primary',
+              "& .MuiInputLabel-root": {
+                color: "text.primary"
               },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: 'divider',
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "divider"
                 },
-                '&:hover fieldset': {
-                  borderColor: 'primary.main',
+                "&:hover fieldset": {
+                  borderColor: "primary.main"
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'primary.main',
-                },
-              },
+                "&.Mui-focused fieldset": {
+                  borderColor: "primary.main"
+                }
+              }
             }}
           />
         </DialogContent>
@@ -3822,8 +4148,8 @@ const GISProfessionalDashboard = () => {
               px: 3,
               background: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
               "&:hover": {
-                background: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)",
-              },
+                background: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)"
+              }
             }}
           >
             Save Measurement
@@ -3842,7 +4168,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             background: "linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           💾 Save Polygon Area
@@ -3857,28 +4183,28 @@ const GISProfessionalDashboard = () => {
             onChange={(e) => setPolygonName(e.target.value)}
             placeholder={`Polygon Area ${Date.now()}`}
             InputLabelProps={{
-              shrink: true,
+              shrink: true
             }}
-            sx={{ 
+            sx={{
               mb: 2,
-              '& .MuiInputBase-input': {
-                color: 'text.primary',
-                backgroundColor: 'background.paper',
+              "& .MuiInputBase-input": {
+                color: "text.primary",
+                backgroundColor: "background.paper"
               },
-              '& .MuiInputLabel-root': {
-                color: 'text.primary',
+              "& .MuiInputLabel-root": {
+                color: "text.primary"
               },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: 'divider',
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "divider"
                 },
-                '&:hover fieldset': {
-                  borderColor: 'secondary.main',
+                "&:hover fieldset": {
+                  borderColor: "secondary.main"
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'secondary.main',
-                },
-              },
+                "&.Mui-focused fieldset": {
+                  borderColor: "secondary.main"
+                }
+              }
             }}
           />
         </DialogContent>
@@ -3898,8 +4224,8 @@ const GISProfessionalDashboard = () => {
               px: 3,
               background: "linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)",
               "&:hover": {
-                background: "linear-gradient(135deg, #7B1FA2 0%, #4A148C 100%)",
-              },
+                background: "linear-gradient(135deg, #7B1FA2 0%, #4A148C 100%)"
+              }
             }}
           >
             Save Polygon
@@ -3918,7 +4244,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             background: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           🔖 Edit Bookmark
@@ -3933,28 +4259,28 @@ const GISProfessionalDashboard = () => {
             onChange={(e) => setEditedBookmarkName(e.target.value)}
             placeholder="Enter bookmark name"
             InputLabelProps={{
-              shrink: true,
+              shrink: true
             }}
-            sx={{ 
+            sx={{
               mb: 2,
-              '& .MuiInputBase-input': {
-                color: 'text.primary',
-                backgroundColor: 'background.paper',
+              "& .MuiInputBase-input": {
+                color: "text.primary",
+                backgroundColor: "background.paper"
               },
-              '& .MuiInputLabel-root': {
-                color: 'text.primary',
+              "& .MuiInputLabel-root": {
+                color: "text.primary"
               },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: 'divider',
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "divider"
                 },
-                '&:hover fieldset': {
-                  borderColor: 'primary.main',
+                "&:hover fieldset": {
+                  borderColor: "primary.main"
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'primary.main',
-                },
-              },
+                "&.Mui-focused fieldset": {
+                  borderColor: "primary.main"
+                }
+              }
             }}
           />
         </DialogContent>
@@ -3975,8 +4301,8 @@ const GISProfessionalDashboard = () => {
               px: 3,
               background: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
               "&:hover": {
-                background: "linear-gradient(135deg, #1976D2 0%, #1565C0 100%)",
-              },
+                background: "linear-gradient(135deg, #1976D2 0%, #1565C0 100%)"
+              }
             }}
           >
             Save Changes
@@ -3995,7 +4321,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             background: "linear-gradient(135deg, #f44336 0%, #d32f2f 100%)",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           🗑️ Delete Bookmark
@@ -4041,8 +4367,8 @@ const GISProfessionalDashboard = () => {
               px: 3,
               background: "linear-gradient(135deg, #f44336 0%, #d32f2f 100%)",
               "&:hover": {
-                background: "linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%)",
-              },
+                background: "linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%)"
+              }
             }}
           >
             Delete Bookmark
@@ -4061,11 +4387,11 @@ const GISProfessionalDashboard = () => {
             height: "85vh",
             maxHeight: "900px",
             borderRadius: 3,
-            background: darkMode 
+            background: darkMode
               ? "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)"
               : "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
-          },
+            boxShadow: "0 20px 60px rgba(0,0,0,0.3)"
+          }
         }}
       >
         <DialogTitle
@@ -4075,7 +4401,7 @@ const GISProfessionalDashboard = () => {
             fontWeight: "bold",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
           <Stack direction="row" alignItems="center" spacing={1}>
@@ -4094,7 +4420,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             borderBottom: 1,
             borderColor: "divider",
-            bgcolor: "background.paper",
+            bgcolor: "background.paper"
           }}
         >
           <ToggleButtonGroup
@@ -4173,9 +4499,16 @@ const GISProfessionalDashboard = () => {
                                 startIcon={<Visibility />}
                                 onClick={() => {
                                   // Load measurement data on map
-                                  if (workingMapRef.current && workingMapRef.current.loadMeasurementData) {
-                                    workingMapRef.current.loadMeasurementData(measurement);
-                                    addLog(`📏 Loaded measurement: ${measurement.name}`);
+                                  if (
+                                    workingMapRef.current &&
+                                    workingMapRef.current.loadMeasurementData
+                                  ) {
+                                    workingMapRef.current.loadMeasurementData(
+                                      measurement
+                                    );
+                                    addLog(
+                                      `📏 Loaded measurement: ${measurement.name}`
+                                    );
                                     setShowSavedDataDialog(false);
                                   }
                                 }}
@@ -4188,7 +4521,9 @@ const GISProfessionalDashboard = () => {
                                 color="error"
                                 startIcon={<Clear />}
                                 onClick={() => {
-                                  showDeleteMeasurementConfirmation(measurement);
+                                  showDeleteMeasurementConfirmation(
+                                    measurement
+                                  );
                                 }}
                               >
                                 Delete
@@ -4209,7 +4544,7 @@ const GISProfessionalDashboard = () => {
                       sx={{
                         mb: 2,
                         color: "secondary.main",
-                        fontWeight: "bold",
+                        fontWeight: "bold"
                       }}
                     >
                       📐 Polygon Areas ({savedPolygons.length})
@@ -4247,9 +4582,16 @@ const GISProfessionalDashboard = () => {
                                 startIcon={<Visibility />}
                                 onClick={() => {
                                   // Load polygon data on map
-                                  if (workingMapRef.current && workingMapRef.current.loadPolygonData) {
-                                    workingMapRef.current.loadPolygonData(polygon);
-                                    addLog(`📐 Loaded polygon: ${polygon.name}`);
+                                  if (
+                                    workingMapRef.current &&
+                                    workingMapRef.current.loadPolygonData
+                                  ) {
+                                    workingMapRef.current.loadPolygonData(
+                                      polygon
+                                    );
+                                    addLog(
+                                      `📐 Loaded polygon: ${polygon.name}`
+                                    );
                                     setShowSavedDataDialog(false);
                                   }
                                 }}
@@ -4326,7 +4668,9 @@ const GISProfessionalDashboard = () => {
                                   setShowElevationChart(true);
                                   setRightSidebarOpen(true);
                                   setShowSavedDataDialog(false);
-                                  addLog(`🏔️ Viewing elevation profile: ${elevation.name}`);
+                                  addLog(
+                                    `🏔️ Viewing elevation profile: ${elevation.name}`
+                                  );
                                 }}
                               >
                                 View
@@ -4341,9 +4685,14 @@ const GISProfessionalDashboard = () => {
                                   if (elevation.key) {
                                     localStorage.removeItem(elevation.key);
                                     // Refresh the elevation list
-                                    const updatedElevations = savedElevations.filter(e => e.key !== elevation.key);
+                                    const updatedElevations =
+                                      savedElevations.filter(
+                                        (e) => e.key !== elevation.key
+                                      );
                                     setSavedElevations(updatedElevations);
-                                    addLog(`🗑️ Deleted elevation profile: ${elevation.name}`);
+                                    addLog(
+                                      `🗑️ Deleted elevation profile: ${elevation.name}`
+                                    );
                                   }
                                 }}
                               >
@@ -4365,7 +4714,7 @@ const GISProfessionalDashboard = () => {
                       sx={{
                         p: 4,
                         textAlign: "center",
-                        bgcolor: "background.paper",
+                        bgcolor: "background.paper"
                       }}
                     >
                       <Typography
@@ -4426,27 +4775,38 @@ const GISProfessionalDashboard = () => {
                               startIcon={<Visibility />}
                               onClick={() => {
                                 // Load measurement data onto map
-                                if (workingMapRef.current && workingMapRef.current.loadMeasurementData) {
-                                  workingMapRef.current.loadMeasurementData(measurement);
-                                  addLog(`✅ Measurement loaded on map: ${measurement.name}`);
+                                if (
+                                  workingMapRef.current &&
+                                  workingMapRef.current.loadMeasurementData
+                                ) {
+                                  workingMapRef.current.loadMeasurementData(
+                                    measurement
+                                  );
+                                  addLog(
+                                    `✅ Measurement loaded on map: ${measurement.name}`
+                                  );
                                   setShowSavedDataDialog(false);
                                 } else {
-                                  addLog('❌ Cannot load measurement - map not ready');
+                                  addLog(
+                                    "❌ Cannot load measurement - map not ready"
+                                  );
                                 }
                               }}
                             >
                               View
                             </Button>
-                              <Button
-                                size="small"
-                                variant="outlined"
-                                color="error"
-                                fullWidth
-                                startIcon={<Clear />}
-                                onClick={() => showDeleteMeasurementConfirmation(measurement)}
-                              >
-                                Delete
-                              </Button>
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              color="error"
+                              fullWidth
+                              startIcon={<Clear />}
+                              onClick={() =>
+                                showDeleteMeasurementConfirmation(measurement)
+                              }
+                            >
+                              Delete
+                            </Button>
                           </Stack>
                         </Card>
                       </Grid>
@@ -4505,7 +4865,9 @@ const GISProfessionalDashboard = () => {
                               color="error"
                               fullWidth
                               startIcon={<Clear />}
-                              onClick={() => showDeletePolygonConfirmation(polygon)}
+                              onClick={() =>
+                                showDeletePolygonConfirmation(polygon)
+                              }
                             >
                               Delete
                             </Button>
@@ -4569,7 +4931,9 @@ const GISProfessionalDashboard = () => {
                                 }
                                 setShowElevationChart(true);
                                 setShowSavedDataDialog(false);
-                                addLog(`✅ Viewing elevation profile: ${elevation.name}`);
+                                addLog(
+                                  `✅ Viewing elevation profile: ${elevation.name}`
+                                );
                               }}
                             >
                               View
@@ -4581,13 +4945,22 @@ const GISProfessionalDashboard = () => {
                               fullWidth
                               startIcon={<Clear />}
                               onClick={() => {
-                                if (window.confirm(`Are you sure you want to delete elevation profile "${elevation.name}"?`)) {
+                                if (
+                                  window.confirm(
+                                    `Are you sure you want to delete elevation profile "${elevation.name}"?`
+                                  )
+                                ) {
                                   // Remove from localStorage
                                   localStorage.removeItem(elevation.key);
                                   // Update state
-                                  const updatedElevations = savedElevations.filter(e => e.key !== elevation.key);
+                                  const updatedElevations =
+                                    savedElevations.filter(
+                                      (e) => e.key !== elevation.key
+                                    );
                                   setSavedElevations(updatedElevations);
-                                  addLog(`🗑️ Deleted elevation profile: ${elevation.name}`);
+                                  addLog(
+                                    `🗑️ Deleted elevation profile: ${elevation.name}`
+                                  );
                                 }
                               }}
                             >
@@ -4642,7 +5015,7 @@ const GISProfessionalDashboard = () => {
             fontWeight: "bold",
             display: "flex",
             alignItems: "center",
-            gap: 1,
+            gap: 1
           }}
         >
           <Crop />
@@ -4654,18 +5027,15 @@ const GISProfessionalDashboard = () => {
               sx={{
                 p: 4,
                 textAlign: "center",
-                bgcolor: "background.paper",
+                bgcolor: "background.paper"
               }}
             >
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                sx={{ mb: 2 }}
-              >
+              <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
                 🔷 No Saved Polygons Yet
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Start drawing polygons and saving them to see your saved polygon data here.
+                Start drawing polygons and saving them to see your saved polygon
+                data here.
               </Typography>
             </Paper>
           ) : (
@@ -4678,8 +5048,8 @@ const GISProfessionalDashboard = () => {
                       p: 2,
                       borderColor: "#9C27B0",
                       "&:hover": {
-                        boxShadow: "0 4px 12px rgba(156, 39, 176, 0.2)",
-                      },
+                        boxShadow: "0 4px 12px rgba(156, 39, 176, 0.2)"
+                      }
                     }}
                   >
                     <Typography
@@ -4688,10 +5058,7 @@ const GISProfessionalDashboard = () => {
                     >
                       {polygon.name}
                     </Typography>
-                    <Typography
-                      variant="h5"
-                      sx={{ color: "#9C27B0", mb: 1 }}
-                    >
+                    <Typography variant="h5" sx={{ color: "#9C27B0", mb: 1 }}>
                       {formatArea(polygon.area || 0)}
                     </Typography>
                     <Typography
@@ -4720,8 +5087,8 @@ const GISProfessionalDashboard = () => {
                           color: "#9C27B0",
                           "&:hover": {
                             borderColor: "#7B1FA2",
-                            backgroundColor: "rgba(156, 39, 176, 0.1)",
-                          },
+                            backgroundColor: "rgba(156, 39, 176, 0.1)"
+                          }
                         }}
                       >
                         Load
@@ -4759,8 +5126,8 @@ const GISProfessionalDashboard = () => {
               px: 3,
               bgcolor: "#9C27B0",
               "&:hover": {
-                bgcolor: "#7B1FA2",
-              },
+                bgcolor: "#7B1FA2"
+              }
             }}
           >
             Close
@@ -4779,7 +5146,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             background: "linear-gradient(135deg, #f44336 0%, #d32f2f 100%)",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           🗑️ Delete Polygon
@@ -4827,15 +5194,15 @@ const GISProfessionalDashboard = () => {
               px: 3,
               background: "linear-gradient(135deg, #f44336 0%, #d32f2f 100%)",
               "&:hover": {
-                background: "linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%)",
-              },
+                background: "linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%)"
+              }
             }}
           >
             Delete Polygon
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       {/* Measurement Delete Confirmation Dialog */}
       <Dialog
         open={measurementDeleteConfirmOpen}
@@ -4847,7 +5214,7 @@ const GISProfessionalDashboard = () => {
           sx={{
             background: "linear-gradient(135deg, #f44336 0%, #d32f2f 100%)",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           🗑️ Delete Measurement
@@ -4874,7 +5241,10 @@ const GISProfessionalDashboard = () => {
                 Points: {measurementToDelete.points?.length || 0}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                Created: {measurementToDelete.timestamp ? new Date(measurementToDelete.timestamp).toLocaleString() : 'Unknown'}
+                Created:{" "}
+                {measurementToDelete.timestamp
+                  ? new Date(measurementToDelete.timestamp).toLocaleString()
+                  : "Unknown"}
               </Typography>
             </Paper>
           )}
@@ -4895,8 +5265,8 @@ const GISProfessionalDashboard = () => {
               px: 3,
               background: "linear-gradient(135deg, #f44336 0%, #d32f2f 100%)",
               "&:hover": {
-                background: "linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%)",
-              },
+                background: "linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%)"
+              }
             }}
           >
             Delete Measurement
